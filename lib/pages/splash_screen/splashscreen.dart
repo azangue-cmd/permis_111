@@ -10,7 +10,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  
   /*
   @override
   void initState() {
@@ -24,30 +23,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.white,
       body: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Image(
-              image: AssetImage("assets/images/logo_p2.png"),
-              width: 150,
-            ),
-            SizedBox(height:08),
-            Text(
-              "Conduite optimale du vehicule corporel",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 11),
+              image: AssetImage("assets/images/permis111_3.png"),
+              width: 200,
             ),
             SizedBox(
-              height: 30,
+              height: 10,
             ),
             SpinKitSpinningLines(
-              color: Colors.white,
+              color: Colors.red,
               size: 50.0,
             )
           ],
