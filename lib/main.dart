@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:permis_111/pages/splash_screen/splashscreen.dart';
+import 'package:permis_111/utils/theme.dart';
+import 'package:permis_111/view/auth_screen/auth_sreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +12,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
+      theme: theme,
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: AuthScreen(),
     );
   }
 }

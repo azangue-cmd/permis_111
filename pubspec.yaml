@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: any
   flutter_launcher_icons: any
   flutter_icons: any
+  country_picker: any
 
 dev_dependencies:
   flutter_test:
