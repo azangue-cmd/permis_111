@@ -47,11 +47,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     style: textTheme.displaySmall!
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
+
                   CommonFunction.blankSpace(height * 0.02, 0),
 
                   // SignIn(width, height, textTheme, context),
                   //CreateAccount(width, height, textTheme, context),
-                  
+
                   Builder(
                     builder: (context) {
                       if (inLogin) {
@@ -60,9 +61,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       return CreateAccount(width, height, textTheme, context);
                     },
                   ),
+
                   CommonFunction.blankSpace(height * 0.05, 0),
-                  BottomAuthScreenWidget(
-                      width: width, height: height, textTheme: textTheme),
+
+                 const BottomAuthScreenWidget(),
                 ],
               ),
             ),
@@ -174,7 +176,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                       ),
                     ),
+
                     CommonFunction.blankSpace(0, width * 0.02),
+
                     RichText(
                       text: TextSpan(
                         children: [
@@ -194,7 +198,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ],
                 ),
+
                 CommonFunction.blankSpace(height * 0.01, 0),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -266,39 +272,16 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ],
                 ),
+
                 CommonFunction.blankSpace(height * 0.02, 0),
-                /*
-                            ElevatedButton(
-                              
-                              onPressed: () {
 
-                              }, 
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(width * 0.80, height * 0.06),
-                                surfaceTintColor: amber,
-                              ),
-                              child: Text(
-                                'Continue',
-                                style: textTheme.displaySmall
-                              ),
-                              ),
-
-                                */
-
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text('Continue', style: textTheme.displaySmall),
-                    ),
-                  ),
+                CommonAuthButton(
+                  title: 'Continue',
+                  onPressed: () {},
                 ),
+
                 CommonFunction.blankSpace(height * 0.02, 0),
+
                 RichText(
                   text: TextSpan(
                     children: [
@@ -320,6 +303,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
 
           CommonFunction.blankSpace(height * 0.05, 0),
+
           Column(
             children: [
               Container(
@@ -384,7 +368,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                       ),
                     ),
+
                     CommonFunction.blankSpace(0, width * 0.02),
+
                     RichText(
                       text: TextSpan(
                         children: [
@@ -404,7 +390,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ],
                 ),
+
                 CommonFunction.blankSpace(height * 0.01, 0),
+
                 SizedBox(
                   height: height * 0.06,
                   child: TextField(
@@ -439,7 +427,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ),
                 ),
+
                 CommonFunction.blankSpace(height * 0.01, 0),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -511,26 +501,23 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ],
                 ),
+
                 CommonFunction.blankSpace(height * 0.02, 0),
+
                 Text(
                   'By enrolling your mobile phone number, you concent to receive automated security notifications via text message from Permis 111.\nMessage and data rates may apply.',
                   style: textTheme.bodyMedium,
                 ),
+
                 CommonFunction.blankSpace(height * 0.02, 0),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text('Verify mobile number', style: textTheme.displaySmall),
-                    ),
-                  ),
+
+                CommonAuthButton(
+                  title: 'Verify mobile number',
+                  onPressed: () {},
                 ),
+
                 CommonFunction.blankSpace(height * 0.02, 0),
+
                 RichText(
                   text: TextSpan(
                     children: [
@@ -552,7 +539,6 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
 
           ///--------------------------------------------------------------------
-          ///
 
           Container(
             height: height * 0.06,
@@ -620,20 +606,68 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 }
 
-class BottomAuthScreenWidget extends StatelessWidget {
-  const BottomAuthScreenWidget({
-    Key? key,
-    required this.width,
-    required this.height,
-    required this.textTheme,
-  }) : super(key: key);
 
-  final double width;
-  final double height;
-  final TextTheme textTheme;
+class CommonAuthButton extends StatelessWidget {
+  CommonAuthButton({Key? key, required this.title, required this.onPressed})
+      : super(key: key);
+
+  String title;
+  VoidCallback onPressed;
+ // double btnWidth;
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      
+      width: double.infinity,
+      decoration: BoxDecoration(
+        
+          color: Colors.amber, borderRadius: BorderRadius.circular(16)),
+      child: FlatButton(
+        onPressed: () {},
+        child: Padding(
+          
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Text(title, style: textTheme.displaySmall),
+        ),
+      ),
+    );
+
+/*
+    ElevatedButton(
+      onPressed: (){},
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(width * 0.88, height * 0.06),
+        backgroundColor: amber,
+      ), 
+      child: Text(
+        'Continue',
+        style: textTheme.displaySmall,
+      ),
+    );
+*/
+  }
+}
+
+class BottomAuthScreenWidget extends StatelessWidget {
+  const BottomAuthScreenWidget({
+    Key? key,
+
+  }) : super(key: key);
+
+ 
+
+  @override
+  Widget build(BuildContext context) {
+
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         Container(
@@ -643,7 +677,9 @@ class BottomAuthScreenWidget extends StatelessWidget {
             gradient: LinearGradient(colors: [white, greyShade3, white]),
           ),
         ),
+
         CommonFunction.blankSpace(height * 0.02, 0),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -661,9 +697,11 @@ class BottomAuthScreenWidget extends StatelessWidget {
             ),
           ],
         ),
+
         CommonFunction.blankSpace(height * 0.01, 0),
+
         Text(
-          '© 1996-2023, Permis111.com, Inc. or its affiliates',
+          '© 2010-2023, Permis111.com, Inc. or its affiliates',
           style: textTheme.labelMedium!.copyWith(color: grey),
         ),
       ],

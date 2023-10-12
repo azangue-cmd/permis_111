@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/auth_screen/auth_sreen.dart';
+import 'package:permis_111/view/auth_screen/otp_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
-      home: AuthScreen(),
+      home:  OTPScreen(mobileNumber: '+237610101010',),
+      //home: AuthScreen(),
     );
   }
 }

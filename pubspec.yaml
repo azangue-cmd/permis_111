@@ -39,6 +39,7 @@ dependencies:
   flutter_launcher_icons: any
   flutter_icons: any
   country_picker: any
+  pinput: any
 
 dev_dependencies:
   flutter_test:
