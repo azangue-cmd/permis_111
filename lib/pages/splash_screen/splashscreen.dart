@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:permis_111/view/auth_screen/auth_sreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,15 +11,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  /*
+  
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3)).then((value) {
-      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (ctx) =>  "non de la page"));
+    Future.delayed(const Duration(seconds: 6)).then((value) {
+      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (ctx) => const AuthScreen()));
     });
   }
-  */
+  
 
   @override
   Widget build(BuildContext context) {

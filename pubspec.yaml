@@ -40,6 +40,12 @@ dependencies:
   flutter_icons: any
   country_picker: any
   pinput: any
+  firebase_auth:
+  firebase_core:
+  provider: any
+  fluttertoast: any
+  page_transition: any
+  intl_phone_field: ^3.2.0
 
 dev_dependencies:
   flutter_test:
