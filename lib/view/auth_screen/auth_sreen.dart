@@ -604,7 +604,7 @@ class CommonAuthButton extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.amber, borderRadius: BorderRadius.circular(25)),
-      child: FlatButton(
+      child: ElevatedButton(
         onPressed: () {},
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
