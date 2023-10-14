@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:permis_111/pages/welcome.dart';
 //import 'package:permis_111/pages/splash_screen/splashscreen.dart';
 import 'package:permis_111/utils/theme.dart';
 //import 'package:provider/provider.dart';
@@ -20,9 +19,9 @@ class MyApp extends StatelessWidget {
       theme: theme,
       debugShowCheckedModeBanner: false,
       //home:  OTPScreen(mobileNumber: '+237610101010',),
-      //home: AuthScreen(),
+      home: const AuthScreen(),
       //home: const SplashScreen(),
-      home: const Welcome(),
+      
     );
   }
 }
