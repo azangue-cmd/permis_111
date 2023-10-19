@@ -1,43 +1,130 @@
+/*
+
+import 'dart:developer';
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 
-/// Firebase user authentification manager
-class AuthService{
-  static final auth = FirebaseAuth.instance;
-  //static GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-  //region Phone number and OTP Authentification
-  /// Firebase authentification With Phone number
-  static void authWithPhoneNumber(String phone,
-      {required Function(String value, int? value1) onCodeSend,
-        required Function(PhoneAuthCredential value) onAutoVerify,
-        required Function(FirebaseAuthException value) onFailed,
-        required Function(String value) autoRetrieval}) async {
-    auth.verifyPhoneNumber(
-      phoneNumber: phone,
-      timeout: const Duration(seconds: 90),
-      verificationCompleted: onAutoVerify,
-      verificationFailed: onFailed,
-      codeSent: onCodeSend,
-      codeAutoRetrievalTimeout: autoRetrieval,
-    );
-  }
-  /// Check OPT Code and SignIn
-  static Future<void> validateOtp(String smsCode, String verificationId) async {
-    final _credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: smsCode);
-    await auth.signInWithCredential(_credential);
-    return;
-  }
-  // endregion
-  
+import 'package:flutter/material.dart';
 
 
-  /// Logout connected [User]
-  static Future<void> disconnect() async {
-    await auth.signOut();
-    return;
+import 'package:page_transition/page_transition.dart';
+
+import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
+
+
+import 'package:permis_111/view/auth_screen/otp_screen.dart';
+
+
+import 'package:provider/provider.dart';
+
+
+import '../../provier/auth_provider/auth_provider.dart';
+
+
+class AuthServices {
+
+  static bool checkAuthentication() {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+
+    User? user = auth.currentUser;
+
+
+    if (user != null) {
+
+      return true;
+
+    }
+
+
+    return false;
+
   }
-  /// Get Current connected [User]
-  static User? get user => auth.currentUser;
+
+
+  static receiveOTP(
+      {required BuildContext context, required String mobileNo}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      await auth.verifyPhoneNumber(
+        phoneNumber: mobileNo,
+        verificationCompleted: (PhoneAuthCredential credential) {
+          log(credential.toString());
+        },
+        verificationFailed: (FirebaseAuthException exception) {
+          log(exception.toString());
+        },
+        codeSent: (String verificationID, int? resendToken) {
+          context
+              .read<AuthProvider>()
+              .upDateverificationId(verID: verificationID);
+          context.read<AuthProvider>().upDatePhoneNum(num: mobileNo);
+          Navigator.push(
+            context,
+            PageTransition(
+              child: OTPScreen(mobileNumber: mobileNo),
+              type: PageTransitionType.rightToLeft,
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {},
+      );
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+  static verifyOTP({required BuildContext context, required String otp}) async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+
+    try {
+
+      AuthCredential credential = PhoneAuthProvider.credential(
+
+        verificationId: context.read<AuthProvider>().verificationId,
+
+        smsCode: otp,
+
+      );
+      auth.signInWithCredential(credential);
+
+      Navigator.push(
+          context,
+          PageTransition(
+            child: const SignInLogic(),
+            type: PageTransitionType.rightToLeft,
+          ));
+
+    } catch (e) {
+
+      log(e.toString());
+
+    }
+
+  }
+
+}
+
+*/
+
+
+
+
+
+import 'package:firebase_auth/firebase_auth.dart';
+
+class AuthService {
+  final auth = FirebaseAuth.instance;
+
+  Future<void> authAnonym() =>
+      auth.signInAnonymously().then((credential) => null);
+
+  Stream<User?> get userChanged => auth.authStateChanges();
+
+  Future<void> logOut() => auth.signOut().then((value) => null);
 }
 
