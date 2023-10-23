@@ -27,7 +27,7 @@ class HomeScreenBanner extends StatelessWidget {
               //margin: EdgeInsets.symmetric(horizontal: 3.0),
               decoration: BoxDecoration(
                 color: Colors.amber,
-                image: DecorationImage(image: AssetImage('assets/images/carousel_slideshow/${i}'),
+                image: DecorationImage(image: AssetImage('assets/images/carousel_slideshow/$i'),
                 fit: BoxFit.cover,
                 ),
               ),

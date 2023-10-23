@@ -20,8 +20,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
-    todaysDealsCarouselController:
-    todaysDealsCarouselController;
+    
     return SizedBox(
       width: width,
       child: Padding(
@@ -98,6 +97,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
             ),
             GridView.builder(
                 itemCount: 4,
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   mainAxisSpacing: 10,
@@ -136,7 +136,8 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                       ),
                     ),
                   );
-                }),
+                }
+                ),
             //CommonFunction.blankSpace(height * 0.01, 0),
             TextButton(
               onPressed: () {},
