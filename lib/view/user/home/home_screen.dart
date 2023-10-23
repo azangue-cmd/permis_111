@@ -1,9 +1,8 @@
-import 'dart:developer';
-
+//traduire tout les textes en francais
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:permis_111/constants/common_function.dart';
-import '../../../constants/constants.dart';
+import 'package:permis_111/constants/constant_permis.dart';
 import '../../../pages/widgets/home_widget/homeScreenBanner.dart';
 import '../../../pages/widgets/home_widget/homeScreenCategoriesList.dart';
 import '../../../pages/widgets/home_widget/homePageAppBar.dart';
@@ -79,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
               CommonFunction.divider(),
               OtherOfferGridWidget(
                   title: 'Latest Launces in Headphones',
-                  textBtnName: 'Explore More ',
-                  productPicNamesList: headphonesDeals,
+                  textBtnName: 'En savoir plus',
+                  productPicNamesList: headphonesProductDeals,
                   offerFor: 'headphones'
                   ),
               CommonFunction.divider(),
@@ -89,16 +88,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: width,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/offersNsponcered/insurance.png'),
+                        image: AssetImage('assets/images/carousel_permis_slideshow/permis7.jpg'),
                         fit: BoxFit.fill, 
                       ),
                       )
                     ),
               CommonFunction.divider(),
               OtherOfferGridWidget(
-                  title: 'minimum 70% off | Top offers on Clothing',
-                  textBtnName: 'See all deals ',
-                  productPicNamesList: clothingDealsList,
+                  title: '70% de réduction | nos meilleures offres',
+                  textBtnName: 'Voir toutes les offres',
+                  productPicNamesList: clothingProductDealsList,
                   offerFor: 'clothing'
                   ),
               CommonFunction.divider(),    
@@ -109,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.01),
                     child: Text(
-                        'Watch Sixer only on miniTv',
+                        'plus de documentaire sur 111 TV',
                         style: textTheme.displaySmall!.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -124,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: const Image(
                       image: AssetImage(
-                      'assets/images/offersNsponcered/sixer.png'
+                      'assets/images/carousel_permis_slideshow/permis8.jpg'
                       ), 
                       fit: BoxFit.fill,
                       ),
@@ -182,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                                'assets/images/offersNsponcered/${productPicNamesList[index]}'),
+                                'assets/images/permis_offersNsponcered/${productPicNamesList[index]}.jpeg'),
                             fit: BoxFit.contain,
                           ),
                           borderRadius: BorderRadius.circular(10),
@@ -202,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Text(
-                      offerFor == 'headphones' ? headphoneDeals(index) : clothingDeals(index),
+                      offerFor == 'headProductphones' ? headphoneDeals(index) : clothingDeals(index),
                       style: textTheme.bodyMedium,
                     ),
                   ],

@@ -2,9 +2,10 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:permis_111/constants/constant_permis.dart';
 
 import '../../../constants/common_function.dart';
-import '../../../constants/constants.dart';
+//import '../../../constants/constants.dart';
 import '../../../utils/colors.dart';
 
 class TodaysDealsHomeScreenWidget extends StatelessWidget {
@@ -33,7 +34,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
           children: [
             //CommonFunction.blankSpace(height * 0.01, 0),
             Text(
-              '50%-80% off | Latest deals.',
+              '50%-80% de réduction | Dernières offres.',
               style: textTheme.displaySmall!.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -45,7 +46,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                 autoPlay: true,
                 viewportFraction: 1,
               ),
-              items: todaysDeals.map(
+              items: permisTodaysDeals.map(
                 (i) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -56,7 +57,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                           color: Colors.amber,
                           image: DecorationImage(
                             image:
-                                AssetImage('assets/images/todays_deals/${i}'),
+                                AssetImage('assets/images/permis_today_deals/$i.jpeg'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -77,7 +78,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    'Upto 62% off',
+                    'Jusqu’à 62% de réduction',
                     style: textTheme.labelMedium!.copyWith(
                       color: white,
                     ),
@@ -85,7 +86,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                 ),
                 CommonFunction.blankSpace(0, width * 0.02),
                 Text(
-                  'Deal of the Day',
+                  'Offre du jour',
                   style: textTheme.labelMedium!
                       .copyWith(color: red, fontWeight: FontWeight.bold),
                 ),
@@ -117,7 +118,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                              'assets/images/todays_deals/${todaysDeals[index]}'),
+                              'assets/images/permis_today_deals/${permisTodaysDeals[index]}.jpeg'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(10),
@@ -142,7 +143,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
             TextButton(
               onPressed: () {},
               child: Text(
-                'See all Deals ',
+                'Voir toutes les offres ',
                 style: textTheme.bodySmall!.copyWith(
                   color: blue,
                 ),

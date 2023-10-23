@@ -79,6 +79,11 @@ flutter:
   - assets/images/menu_pics/
   - assets/images/offersNsponcered/
   - assets/images/todays_deals/
+  - assets/images/carousel_permis_slideshow/
+  - assets/images/menus_permis/
+  - assets/images/permis_categories/
+  - assets/images/permis_offersNsponcered/
+  - assets/images/permis_today_deals/
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

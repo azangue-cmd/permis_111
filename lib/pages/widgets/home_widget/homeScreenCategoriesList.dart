@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:permis_111/constants/constant_permis.dart';
 
-import '../../../constants/constants.dart';
 
 class HomeScreenCategoriesList extends StatelessWidget {
   const HomeScreenCategoriesList({
@@ -19,7 +19,7 @@ class HomeScreenCategoriesList extends StatelessWidget {
       height: height * 0.1,
       width: width ,
       child: ListView.builder(
-          itemCount: categories.length,
+          itemCount: categorisPermis.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return Container(
@@ -31,11 +31,11 @@ class HomeScreenCategoriesList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image(
-                     image: AssetImage('assets/images/categories/${categories[index]}.png'),
+                     image: AssetImage('assets/images/permis_categories/${categorisPermis[index]}.jpg'),
                      height: height * 0.07,
                     ), 
                     Text(
-                      categories[index],
+                      categorisPermis[index],
                       style: textTheme.labelMedium,
                     ),
                 ],
