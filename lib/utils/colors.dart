@@ -16,6 +16,7 @@ Color teal = Colors.teal;
 const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
 Color red = Colors.red;
 Color  kPrimaryColor = Color.fromARGB(255, 13, 71, 161);
+Color green = Colors.green;
 
 
 //Lienar Gradient Color
