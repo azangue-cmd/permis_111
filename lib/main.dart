@@ -4,6 +4,7 @@ import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/firebase_options.dart';
   import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/user/cart/cart_screen.dart';
+import 'package:permis_111/view/user/menu/menu_screen.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
          // mobileNumber: '+237610101010',
        // ),
         //home: const AuthScreen(),
-        home: const CartScreen(),
+        home: const MenuScreen(),
       ),
     );
   }
