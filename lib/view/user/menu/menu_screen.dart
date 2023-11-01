@@ -49,14 +49,14 @@ class _MenuScreenState extends State<MenuScreen> {
                             childAspectRatio: 0.7),
                     shrinkWrap: true,
                     physics: const PageScrollPhysics(),
-                    itemCount: 18,
+                    itemCount: 7,
                     itemBuilder: (context, index) {
                       return Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: greyShade3),
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/menu_pics/$index.png',
+                              'assets/images/menus_permis/$index.jpg',
                             ),
                             fit: BoxFit.fill,
                           ),

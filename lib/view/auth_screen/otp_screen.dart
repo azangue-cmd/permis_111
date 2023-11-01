@@ -9,10 +9,13 @@ import 'auth_sreen.dart';
 
 class OTPScreen extends StatefulWidget {
   OTPScreen(
-      {Key? key, required this.mobileNumber, required this.verificationId})
+      {Key? key, 
+      required this.mobileNumber, 
+      //required this.verificationId
+      })
       : super(key: key);
   String mobileNumber;
-  final String verificationId;
+  //final String verificationId;
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -21,7 +24,7 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
 
 TextEditingController otpController = TextEditingController();
-
+/*
   String smsCode = "";
   bool loading = false;
   bool resend = false;
@@ -78,7 +81,7 @@ TextEditingController otpController = TextEditingController();
     print("Verification effectue avec succes");
   }
   //endregion
-
+*/
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -137,8 +140,8 @@ TextEditingController otpController = TextEditingController();
                 CommonFunction.blankSpace(height * 0.02, 0),
           
                 TextField(
-                  
                   controller: otpController,
+                  
                   decoration: InputDecoration(
                             
                             hintText: 'Enter OTP code',
@@ -208,10 +211,16 @@ TextEditingController otpController = TextEditingController();
                     onPressed: () {},
                     //onPressed: !resend ? null : onResendSmsCode,
                     child: Text(
+                      'Resend OTP !!!',
+                      style: textTheme.bodyMedium!.copyWith(
+                        color: Colors.blue,
+                      ),
+                      /*
                       !resend
                           ? "00:${count.toString().padLeft(2, "0")}"
                           : "Resend OTP !!!",
                       style: const TextStyle(color: Colors.blue),
+                      */
                     ),
                   ),
                 ),

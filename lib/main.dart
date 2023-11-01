@@ -2,10 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/firebase_options.dart';
+import 'package:permis_111/pages/splash_screen/splashscreen.dart';
+import 'package:permis_111/pages/widgets/signIn.dart';
   import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/user/cart/cart_screen.dart';
 import 'package:permis_111/view/user/menu/menu_screen.dart';
+import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
+
+import 'view/auth_screen/auth_sreen.dart';
+import 'view/auth_screen/otp_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +35,8 @@ class MyApp extends StatelessWidget {
         //home: OTPScreen(
          // mobileNumber: '+237610101010',
        // ),
-        //home: const AuthScreen(),
-        home: const MenuScreen(),
+        home: const AuthScreen(),
+        //home: const UserBottomNavBar(),
       ),
     );
   }

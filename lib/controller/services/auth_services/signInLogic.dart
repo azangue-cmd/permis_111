@@ -1,11 +1,10 @@
-/*
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/controller/services/auth_services/auth_service.dart';
 import 'package:permis_111/view/auth_screen/auth_sreen.dart';
+import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 
-import '../../../view/home_Screen/home_screen.dart';
+import '../../../view/user/home/home_screen.dart';
 
 class SignInLogic extends StatefulWidget {
   const SignInLogic({super.key});
@@ -21,16 +20,25 @@ class _SignInLogicState extends State<SignInLogic> {
         ? Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
-                child: const HomeScreen(),
-                type: PageTransitionType.rightToLeft),
+                child: const UserBottomNavBar(),
+                type: PageTransitionType.rightToLeft,
+                ),
             (route) => false)
         : Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
                 child: const AuthScreen(),
-                type: PageTransitionType.rightToLeft),
+                type: PageTransitionType.rightToLeft,
+                ),
             (route) => false,
           ); 
+  }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ChechAuthentication();
+    });
   }
 
   @override
@@ -39,4 +47,4 @@ class _SignInLogicState extends State<SignInLogic> {
   }
 }
 
-*/
+

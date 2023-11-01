@@ -1,4 +1,3 @@
-/*
 
 import 'dart:developer';
 
@@ -25,6 +24,7 @@ import '../../provier/auth_provider/auth_provider.dart';
 
 class AuthServices {
 
+
   static bool checkAuthentication() {
 
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -43,6 +43,8 @@ class AuthServices {
     return false;
 
   }
+
+   
 
 
   static receiveOTP(
@@ -92,12 +94,14 @@ class AuthServices {
       );
       auth.signInWithCredential(credential);
 
+
       Navigator.push(
           context,
           PageTransition(
             child: const SignInLogic(),
             type: PageTransitionType.rightToLeft,
           ));
+
 
     } catch (e) {
 
@@ -109,11 +113,10 @@ class AuthServices {
 
 }
 
-*/
 
 
 
-
+/*
 
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -127,4 +130,6 @@ class AuthService {
 
   Future<void> logOut() => auth.signOut().then((value) => null);
 }
+
+*/
 

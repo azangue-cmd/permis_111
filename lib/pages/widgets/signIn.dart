@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
 
 
   //region send otp code
-
+/*
   void sendOtpCode() {
     loading = true;
     setState(() {});
@@ -56,6 +56,7 @@ class _SignInState extends State<SignIn> {
       }, autoRetieval: (v) {});
     }
   }
+  */
 
   //endregion
 
@@ -182,6 +183,7 @@ class _SignInState extends State<SignIn> {
                   ],
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
+              
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -253,13 +255,14 @@ class _SignInState extends State<SignIn> {
                     ),
                   ],
                 ),
+                
                 CommonFunction.blankSpace(height * 0.02, 0),
                 CommonAuthButton(
                   title: 'Continue',
                   btnWidth: 0.88,
                   
                   onPressed: () {
-                    loading ? null : sendOtpCode();
+                    //loading ? null : sendOtpCode();
                   },
                   
 
@@ -302,4 +305,6 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+
+  
 }

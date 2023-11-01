@@ -18,7 +18,7 @@ class _CreateAccountState extends State<CreateAccount> {
   String curentCountryCode = '+237';
   TextEditingController mobileController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  bool loading = false;
+  //bool loading = false;
   String phoneNumber = '';
   @override
   Widget build(BuildContext context) {

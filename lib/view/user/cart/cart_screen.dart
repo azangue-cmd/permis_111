@@ -116,7 +116,7 @@ class _CartScreenState extends State<CartScreen> {
                         child:  Row(
                           children: [
                             Expanded(
-                              flex: 4,
+                              flex: 7,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -190,7 +190,7 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                               CommonFunction.blankSpace(0, width * 0.02,),
                               Expanded(
-                                flex: 9,
+                                flex: 17,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -237,19 +237,20 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                           ),
                                           CommonFunction.blankSpace(0, width * 0.01,),
-                                          ElevatedButton(
-                                          onPressed: (){}, 
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: white,
-                                            side: BorderSide(
-                                              color: greyShade3
-                                            ),
-
-                                          ),
-                                          child: Text(
-                                            'Save for later',
-                                            style: textTheme.bodySmall,
-                                          ),
+                                           // set the width to a specific value
+                                            ElevatedButton(
+                                              onPressed: (){}, 
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: white,
+                                                side: BorderSide(
+                                                  color: greyShade3,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                'Save later',
+                                                style: textTheme.bodySmall,
+                                              ),
+                                            
                                           ),
                                       ],
                                     ),
