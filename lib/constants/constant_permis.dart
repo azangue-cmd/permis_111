@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 const String keySecret = '<Razorpay Key Secrets>';
 const String keyID = '<Razorpay Key ID>';
 
+FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 List<String> categorisPermis = [
   'care',

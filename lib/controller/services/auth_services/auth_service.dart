@@ -93,8 +93,6 @@ class AuthServices {
 
       );
       auth.signInWithCredential(credential);
-
-
       Navigator.push(
           context,
           PageTransition(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permis_111/constants/common_function.dart';
+import '../../controller/services/auth_services/auth_service.dart';
 import '../../controller/services/auth_services/function.dart';
 import '../../pages/widgets/bottomAuthScrenWidget.dart';
 import '../../pages/widgets/commonAuthButon.dart';
@@ -195,12 +196,12 @@ TextEditingController otpController = TextEditingController();
                   btnWidth: 0.88,
 
                   onPressed: () {
-                    /*
+                    
                   AuthServices.verifyOTP(
                     context: context,
                     otp: otpController.text.trim(),
                   );
-                  */
+                  
                 },
                 
                 ),
