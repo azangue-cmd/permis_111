@@ -11,9 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
+import 'package:permis_111/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 
 
 import 'package:permis_111/view/auth_screen/otp_screen.dart';
+import 'package:permis_111/view/user/user_data_screen/user_data_input_screen.dart';
 
 
 import 'package:provider/provider.dart';
@@ -81,30 +83,25 @@ class AuthServices {
   static verifyOTP({required BuildContext context, required String otp}) async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
-
-
     try {
 
       AuthCredential credential = PhoneAuthProvider.credential(
 
         verificationId: context.read<AuthProvider>().verificationId,
-
         smsCode: otp,
 
       );
       auth.signInWithCredential(credential);
+      
       Navigator.push(
           context,
           PageTransition(
             child: const SignInLogic(),
             type: PageTransitionType.rightToLeft,
           ));
-
-
+          
     } catch (e) {
-
       log(e.toString());
-
     }
 
   }

@@ -6,6 +6,8 @@ import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/view/user/user_data_screen/user_data_input_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'view/auth_screen/auth_sreen.dart';
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
         //home: OTPScreen(
          // mobileNumber: '+237610101010',
        // ),
-        home: const UserDataInputScreen(),
+        home: const AuthScreen(),
         //home: const UserBottomNavBar(),
       ),
     );

@@ -1,8 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/constants/constant_permis.dart';
+import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/model/user_model.dart';
 
 class UserDataCRUD {
@@ -19,28 +20,35 @@ class UserDataCRUD {
         log('Data Added');
         CommonFunction.showToast(
             context: context, message: 'User Added Successfull');
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              child: const SignInLogic(),
+              type: PageTransitionType.rightToLeft,
+            ),
+            (route) => false);
       });
     } catch (e) {
       log(e.toString());
-      CommonFunction.showToast(
-        context: context, message: e.toString());
+      CommonFunction.showToast(context: context, message: e.toString());
     }
   }
 
-  static Future checkUser()async{
-    try{
+  static Future<bool> checkUser() async {
+    bool userPresent = false;
+    try {
       await firestore
-        .collection('users')
-        .where('mobileNum', isEqualTo: auth.currentUser!.phoneNumber)
-        .get()
-        .then((value) => value.size > 0 ? true : false);
-    }catch(e){
+          .collection('users')
+          .where('mobileNum', isEqualTo: auth.currentUser!.phoneNumber)
+          .get()
+          .then((value) => value.size > 0 ? userPresent = true : userPresent = false);
+    } catch (e) {
       log(e.toString());
     }
-    
-      
-      
-      /*
+    log(userPresent.toString());
+    return userPresent;
+
+    /*
       if(value.docs.isEmpty){
         log('User Not Found');
         return false;
@@ -49,7 +57,5 @@ class UserDataCRUD {
         return true;
       }
       */
-
-   
   }
 }
