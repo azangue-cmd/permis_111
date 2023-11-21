@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permis_111/constants/common_function.dart';
+import 'package:permis_111/controller/services/auth_services/function.dart';
 import 'package:permis_111/utils/colors.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -39,6 +40,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const Spacer(),
                 IconButton(
+                  onPressed: () async {
+                    await disconnect();
+                  },
+                  icon: const Icon(Icons.power),
+                ),
+                IconButton(
                   onPressed: () {},
                   icon: Icon(
                     Icons.notifications_none,
@@ -74,7 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 UsersOrders(width: width, height: height, textTheme: textTheme),
                 CommonFunction.blankSpace(height * 0.01, 0),
                 CommonFunction.divider(),
-                KeepShopping(width: width, height: height, textTheme: textTheme),
+                KeepShopping(
+                    width: width, height: height, textTheme: textTheme),
                 CommonFunction.blankSpace(height * 0.01, 0),
                 CommonFunction.divider(),
                 BuyAgain(width: width, height: height, textTheme: textTheme)
@@ -111,8 +119,8 @@ class KeepShopping extends StatelessWidget {
             children: [
               Text(
                 'Keep Shooping for ',
-                style: textTheme.bodyLarge!
-                    .copyWith(fontWeight: FontWeight.bold),
+                style:
+                    textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {},
@@ -129,13 +137,13 @@ class KeepShopping extends StatelessWidget {
           GridView.builder(
             itemCount: 5,
             shrinkWrap: true,
-            physics:  const PageScrollPhysics(),
+            physics: const PageScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 0.9,
-                ),
+              crossAxisCount: 3,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 0.9,
+            ),
             itemBuilder: (context, index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +239,6 @@ class BuyAgain extends StatelessWidget {
     );
   }
 }
-
 
 class UsersOrders extends StatelessWidget {
   const UsersOrders({

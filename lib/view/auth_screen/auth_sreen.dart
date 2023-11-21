@@ -1,10 +1,15 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/pages/widgets/commonAuthButon.dart';
 import 'package:permis_111/utils/colors.dart';
+import 'package:permis_111/view/auth_screen/otp_screen.dart';
+import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 
 import '../../controller/services/auth_services/auth_service.dart';
+import '../../controller/services/auth_services/function.dart';
 import '../../pages/widgets/bottomAuthScrenWidget.dart';
 //import '../../pages/widgets/createAccount.dart';
 //import '../../pages/widgets/signIn.dart';
@@ -17,12 +22,71 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool loading = false;
   bool inLogin = true;
   String curentCountryCode = '+237';
   TextEditingController mobileController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  //bool loading = false;
+
   //String phoneNumber = '';
+  String mobileNumber = '';
+
+  void sendOtpCode() {
+    bool loading = true;
+    setState(() {});
+    final auth = FirebaseAuth.instance;
+    if (mobileNumber.isNotEmpty) {
+      authWithPhoneNumber(mobileNumber, onCodeSend: (verificationId, v) {
+        loading = false;
+        setState(() {});
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (c) => OTPScreen(
+                  verificationId: verificationId,
+                  mobileNumber: mobileNumber,
+                )));
+      }, onAutoVerify: (v) async {
+        auth.signInWithCredential(v);
+        Navigator.of(context).pop();
+      }, onFailed: (e) {
+        loading = false;
+        setState(() {
+          
+        });
+        print('Le code est errone');
+      }, autoRetieval: (v) {});
+    }
+  }
+
+  //region sendOtpCode
+
+  /*
+  void sendOtpCode() {
+    loading = true;
+    setState(() {});
+    final auth = FirebaseAuth.instance;
+    if (mobileNumber.isNotEmpty) {
+      authWithPhoneNumber(mobileNumber,
+          //verification
+          onCodeSend: (verificationId, v) {
+        loading = false;
+        setState(() {});
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (c) => OTPScreen(
+                  verificationId: verificationId,
+                  mobileNumber: mobileNumber,
+                )));
+      },
+          //authentification
+          onAutoVerify: (v) async {
+        await auth.signInWithCredential(v);
+      }, onFailed: (e) {
+        print("Le code est errone");
+      }, autoRetieval: (v) {});
+    }
+  }
+
+  */
+  //endregion
 
   @override
   Widget build(BuildContext context) {
@@ -56,22 +120,18 @@ class _AuthScreenState extends State<AuthScreen> {
                     style: textTheme.displaySmall!
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
-
                   CommonFunction.blankSpace(height * 0.02, 0),
-
                   Builder(
                     builder: (context) {
                       if (inLogin) {
                         //return  const CreateAccount();
-                        return  SignIn(width, height, textTheme, context);  
+                        return SignIn(width, height, textTheme, context);
                       }
-                      return  CreateAccount(width, height, textTheme, context);
+                      return CreateAccount(width, height, textTheme, context);
                       //return  const SignIn();
                     },
                   ),
-
                   CommonFunction.blankSpace(height * 0.05, 0),
-
                   const BottomAuthScreenWidget(),
                 ],
               ),
@@ -80,9 +140,9 @@ class _AuthScreenState extends State<AuthScreen> {
         ));
   }
 
-  
   //region signIn
-  Container SignIn(double width, double height, TextTheme textTheme, BuildContext context){
+  Container SignIn(
+      double width, double height, TextTheme textTheme, BuildContext context) {
     return Container(
       width: width,
       decoration: BoxDecoration(
@@ -206,7 +266,21 @@ class _AuthScreenState extends State<AuthScreen> {
                   ],
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
-              
+                IntlPhoneField(
+                  initialCountryCode: "CM",
+                  onChanged: (value) {
+                    print(value.completeNumber);
+                    mobileNumber = value.completeNumber;
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  style: textTheme.displaySmall,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                ),
+
+                /*
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -278,20 +352,23 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ],
                 ),
-                
+                */
                 CommonFunction.blankSpace(height * 0.02, 0),
                 CommonAuthButton(
-                  title: 'Continue',
+                  title: 'SignIn',
                   btnWidth: 0.88,
-                  
-                  
+                  onPressed: () {
+                    loading ? null : sendOtpCode();
+                  },
+
+                  /*              
                   onPressed: () {
                     AuthServices.receiveOTP(
                         context: context,
                         mobileNo:
                             '$curentCountryCode${mobileController.text.trim()}');
                   },
-
+*/
                 ),
                 CommonFunction.blankSpace(height * 0.02, 0),
                 RichText(
@@ -335,8 +412,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
   //region createAccount
 
-Container CreateAccount(double width, double height, TextTheme textTheme, BuildContext context){
-  return Container(
+  Container CreateAccount(
+      double width, double height, TextTheme textTheme, BuildContext context) {
+    return Container(
       width: width,
       decoration: BoxDecoration(
         border: Border.all(
@@ -345,7 +423,6 @@ Container CreateAccount(double width, double height, TextTheme textTheme, BuildC
       ),
       child: Column(
         children: [
-
           Container(
             width: width,
             padding: EdgeInsets.symmetric(
@@ -353,7 +430,6 @@ Container CreateAccount(double width, double height, TextTheme textTheme, BuildC
             child: Column(
               children: [
                 Row(
-                  
                   children: [
                     InkWell(
                       onTap: () {
@@ -435,6 +511,21 @@ Container CreateAccount(double width, double height, TextTheme textTheme, BuildC
                   ),
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
+                IntlPhoneField(
+                  initialCountryCode: "CM",
+                  onChanged: (value) {
+                    print(value.completeNumber);
+                    mobileNumber = value.completeNumber;
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  style: textTheme.displaySmall,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                ),
+/*
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -506,6 +597,8 @@ Container CreateAccount(double width, double height, TextTheme textTheme, BuildC
                     ),
                   ],
                 ),
+
+*/
                 CommonFunction.blankSpace(height * 0.02, 0),
                 Text(
                   'By enrolling your mobile phone number, you concent to receive automated security notifications via text message from Permis 111.\nMessage and data rates may apply.',
@@ -516,11 +609,16 @@ Container CreateAccount(double width, double height, TextTheme textTheme, BuildC
                   title: 'Continue',
                   btnWidth: 0.88,
                   onPressed: () {
+                    loading ? null : sendOtpCode();
+                  },
+                  /*
+                  onPressed: () {
                     AuthServices.receiveOTP(
                         context: context,
                         mobileNo:
                             '+$curentCountryCode${mobileController.text.trim()}');
                   },
+                  */
                 ),
                 CommonFunction.blankSpace(height * 0.02, 0),
                 RichText(
@@ -608,12 +706,7 @@ Container CreateAccount(double width, double height, TextTheme textTheme, BuildC
         ],
       ),
     );
-}
+  }
 
   //endregion
-
-
-
 }
-
-

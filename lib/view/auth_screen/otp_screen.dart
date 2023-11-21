@@ -1,30 +1,94 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
-import '../../controller/services/auth_services/auth_service.dart';
+import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
+import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
+import 'package:pinput/pinput.dart';
 import '../../controller/services/auth_services/function.dart';
 import '../../pages/widgets/bottomAuthScrenWidget.dart';
 import '../../pages/widgets/commonAuthButon.dart';
 import '../../utils/colors.dart';
-import 'auth_sreen.dart';
 
 class OTPScreen extends StatefulWidget {
-  OTPScreen(
-      {Key? key, 
-      required this.mobileNumber, 
-      //required this.verificationId
-      })
-      : super(key: key);
-  String mobileNumber;
-  //final String verificationId;
+  OTPScreen({
+    Key? key,
+    required this.verificationId,
+    required this.mobileNumber,
+  }) : super(key: key);
+  final String mobileNumber;
+  final String verificationId;
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
 }
 
 class _OTPScreenState extends State<OTPScreen> {
+  TextEditingController otpController = TextEditingController();
+  bool loading = false;
+  String smsCode = '';
+  bool resend = false;
+  int count = 20;
+  final auth = FirebaseAuth.instance;
 
-TextEditingController otpController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    decompte();
+  }
+
+  late Timer timer;
+
+  void decompte() {
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (count < 1) {
+        timer.cancel();
+        count = 20;
+        resend = true;
+        setState(() {});
+        return;
+      }
+      count--;
+      setState(() {});
+    });
+  }
+
+  void onResendSmsCode() {
+    resend = false;
+    setState(() {});
+    authWithPhoneNumber(widget.mobileNumber, onCodeSend: (verificationId, v) {
+      loading = false;
+      decompte();
+      setState(() {});
+    }, onAutoVerify: (v) async {
+      auth.signInWithCredential(v);
+      // Navigator.of(context).pop();
+    }, onFailed: (e) {
+      print('Le code est errone');
+    }, autoRetieval: (v) {});
+  }
+
+  void onVerifySmsCode() async {
+    loading = true;
+    setState(() {});
+    await validateOtp(smsCode, widget.verificationId);
+    loading = false;
+    setState(() {});
+   
+    print('Verification effectue avec succes');
+    Navigator.push(
+          context,
+          PageTransition(
+            child: const SignInLogic(),
+            type: PageTransitionType.rightToLeft,
+          ));
+    // Navigator.of(context).pop();
+  }
+
+//region essaye de la deuxieme methode
 /*
   String smsCode = "";
   bool loading = false;
@@ -71,7 +135,7 @@ TextEditingController otpController = TextEditingController();
   }
   //endregion
 
-  //region resend code
+  //region sms code
   void onVerifySmsCode() async {
     loading = true;
     setState(() {});
@@ -82,16 +146,17 @@ TextEditingController otpController = TextEditingController();
     print("Verification effectue avec succes");
   }
   //endregion
+
+//endregion
 */
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       backgroundColor: white,
-      appBar: AppBar(  
+      appBar: AppBar(
         backgroundColor: white,
         centerTitle: true,
         title: Image(
@@ -104,10 +169,8 @@ TextEditingController otpController = TextEditingController();
           child: Container(
             height: height,
             width: width,
-            padding:  EdgeInsets.symmetric(
-              horizontal: width * 0.03,
-              vertical: height * 0.02
-            ),
+            padding: EdgeInsets.symmetric(
+                horizontal: width * 0.03, vertical: height * 0.02),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -117,7 +180,7 @@ TextEditingController otpController = TextEditingController();
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
-                RichText(  
+                RichText(
                   text: TextSpan(
                     children: [
                       TextSpan(
@@ -139,7 +202,8 @@ TextEditingController otpController = TextEditingController();
                   style: textTheme.bodyMedium,
                 ),
                 CommonFunction.blankSpace(height * 0.02, 0),
-          
+
+                /*
                 TextField(
                   controller: otpController,
                   
@@ -175,9 +239,10 @@ TextEditingController otpController = TextEditingController();
                             
                           ),
                 ),
-                
+                */
+
                 // region pinput
-                /*
+
                 Center(
                   child: Pinput(
                     length: 6,
@@ -187,41 +252,79 @@ TextEditingController otpController = TextEditingController();
                     },
                   ),
                 ),
-                */
+
                 // endregion
-          
+
+                //             CommonFunction.blankSpace(height * 0.02, 0),
+// region texte resend code
+/*
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: !resend ? null : onResendSmsCode,
+                    child: Text(
+                      !resend
+                          ? "00:${count.toString().padLeft(2, "0")}"
+                          : "Renvoyer le code!",
+                      style: const TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ),
+*/
+// endregion
                 CommonFunction.blankSpace(height * 0.02, 0),
+/*
+                Container(
+                  width: double.infinity,
+                  height: height * 0.06,
+                  decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(22)),
+                  child: ElevatedButton(
+                    onPressed:
+                        smsCode.length < 6 || loading ? null : onVerifySmsCode,
+                    child: loading
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.white),
+                          )
+                        : Text("Continue", style: textTheme.displaySmall),
+                  ),
+                ),
+*/
+
                 CommonAuthButton(
                   title: 'Continue',
                   btnWidth: 0.88,
-
                   onPressed: () {
-                    
+                    smsCode.length < 6 || loading ? null : onVerifySmsCode();
+                  },
+                  /*
+                  onPressed: () { 
                   AuthServices.verifyOTP(
                     context: context,
                     otp: otpController.text.trim(),
                   );
-                  
                 },
-                
+                */
                 ),
+
                 CommonFunction.blankSpace(height * 0.01, 0),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
-                    //onPressed: !resend ? null : onResendSmsCode,
+                    onPressed: !resend ? null : onResendSmsCode,
                     child: Text(
+                      /*
                       'Resend OTP !!!',
                       style: textTheme.bodyMedium!.copyWith(
                         color: Colors.blue,
                       ),
-                      /*
+                      */
+
                       !resend
                           ? "00:${count.toString().padLeft(2, "0")}"
                           : "Resend OTP !!!",
                       style: const TextStyle(color: Colors.blue),
-                      */
                     ),
                   ),
                 ),

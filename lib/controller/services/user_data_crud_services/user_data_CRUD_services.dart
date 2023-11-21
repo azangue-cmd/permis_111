@@ -7,6 +7,7 @@ import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/model/user_model.dart';
 
 class UserDataCRUD {
+
   static addNewUser({
     required UserModel userModel,
     required BuildContext context,
@@ -16,7 +17,7 @@ class UserDataCRUD {
           .collection('users')
           .doc(auth.currentUser!.phoneNumber)
           .set(userModel.toMap())
-          .whenComplete(() {
+          .whenComplete(() { 
         log('Data Added');
         CommonFunction.showToast(
             context: context, message: 'User Added Successfull');

@@ -7,13 +7,14 @@ class CommonAuthButton extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.onPressed,
-      required this.btnWidth})
+      required this.btnWidth,
+      })
       : super(key: key);
 
   String title;
   VoidCallback onPressed;
   double btnWidth;
-
+ 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;

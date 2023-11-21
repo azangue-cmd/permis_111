@@ -2,11 +2,13 @@ import 'dart:convert';
 
 class UserModel {
   String? name;
+  String? parentCode;
   String? mobileNum;
   String? userType;
 
   UserModel({
     this.name,
+    this.parentCode,
     this.mobileNum,
     this.userType,
   });
@@ -14,6 +16,7 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
+      'parentCode': parentCode,
       'mobileNum': mobileNum,
       'userType': userType,
     };
@@ -22,6 +25,7 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       name: map['name'] != null ? map['name'] as String : null,
+      parentCode: map['parentCode'] != null ? map['parentCode'] as String : null,
       mobileNum: map['mobileNum'] != null ? map['mobileNum'] as String : null,
       userType: map['userType'] != null ? map['userType'] as String : null,
     );
@@ -29,7 +33,8 @@ class UserModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 

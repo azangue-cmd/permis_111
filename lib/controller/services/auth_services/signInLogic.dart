@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -25,13 +27,21 @@ class _SignInLogicState extends State<SignInLogic> {
             child: const UserBottomNavBar(),
             type: PageTransitionType.rightToLeft,
           ));
-    } 
-    Navigator.push(
-          context,
-          PageTransition(
-            child: const UserDataInputScreen(),
-            type: PageTransitionType.rightToLeft,
-          )); 
+    } else {
+
+      Navigator.push(
+        context,
+        PageTransition(
+          child: const UserDataInputScreen(),
+          type: PageTransitionType.rightToLeft,
+        ));
+
+      //Navigator.of(context)
+         // .push(MaterialPageRoute(builder: (c) => const UserDataInputScreen()));
+    }
+
+    
+        
   }
 
   chechAuthentication() {
@@ -58,6 +68,11 @@ class _SignInLogicState extends State<SignInLogic> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      body: Image(
+        image: AssetImage('assets/images/permis111_2.png'),
+        fit: BoxFit.fill,
+      ),
+    );
   }
 }

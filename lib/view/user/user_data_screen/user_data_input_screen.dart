@@ -16,6 +16,7 @@ class UserDataInputScreen extends StatefulWidget {
 class _UserDataInputScreenState extends State<UserDataInputScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController parentCodeController = TextEditingController();
 
   @override
   void initState() {
@@ -57,120 +58,162 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
             ),
           ),
         ),
-        body: Container(
-          height: height,
-          width: width,
-          padding: EdgeInsets.symmetric(
-            horizontal: width * 0.03,
-            vertical: height * 0.02,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Enter your name',
-                style: textTheme.bodyMedium,
-              ),
-              CommonFunction.blankSpace(height * 0.01, 0),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter your name',
-                  hintStyle: textTheme.bodyMedium!.copyWith(
-                    color: grey,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: grey,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: secondaryColor,
-                    ),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: grey,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: grey,
-                    ),
-                  ),
-                ),
-              ),
-              CommonFunction.blankSpace(height * 0.02, 0),
-              Text(
-                'Phone Number',
-                style: textTheme.bodyMedium,
-              ),
-              CommonFunction.blankSpace(height * 0.01, 0),
-              TextField(
-                controller: phoneController,
-                readOnly: true,
-                decoration: InputDecoration(
-                  hintText: 'Enter your phone number',
-                  hintStyle: textTheme.bodyMedium!.copyWith(
-                    color: grey,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: grey,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: secondaryColor,
-                    ),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: grey,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: grey,
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () async {
-                  UserModel userModel = UserModel(
-                      mobileNum: phoneController.text.trim(),
-                      name: nameController.text.trim(),
-                      userType: 'user');
-                  await UserDataCRUD.addNewUser(
-                    userModel: userModel,
-                    context: context,
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: amber,
-                  minimumSize: Size(width, height * 0.06),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: Text(
-                  'Proceed',
+        body: SingleChildScrollView(
+          child: Container(
+            height: height,
+            width: width,
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.03,
+              vertical: height * 0.02,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Enter your name',
                   style: textTheme.bodyMedium,
                 ),
-              )
-            ],
+                CommonFunction.blankSpace(height * 0.01, 0),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your name',
+                    hintStyle: textTheme.bodyMedium!.copyWith(
+                      color: grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: secondaryColor,
+                      ),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                  ),
+                ),
+                CommonFunction.blankSpace(height * 0.02, 0),
+                Text(
+                  'Enter your parent code',
+                  style: textTheme.bodyMedium,
+                ),
+                CommonFunction.blankSpace(height * 0.01, 0),
+                TextField(
+                  controller: parentCodeController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your parent code',
+                    hintStyle: textTheme.bodyMedium!.copyWith(
+                      color: grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: secondaryColor,
+                      ),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                  ),
+                ),
+                CommonFunction.blankSpace(height * 0.02, 0),
+                Text(
+                  'Phone Number',
+                  style: textTheme.bodyMedium,
+                ),
+                CommonFunction.blankSpace(height * 0.01, 0),
+                TextField(
+                  controller: phoneController,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your phone number',
+                    hintStyle: textTheme.bodyMedium!.copyWith(
+                      color: grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: secondaryColor,
+                      ),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: grey,
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                ElevatedButton(
+                  onPressed: () async {
+                    UserModel userModel = UserModel(
+                        mobileNum: phoneController.text.trim(),
+                        name: nameController.text.trim(),
+                        parentCode: parentCodeController.text.trim(),
+                        userType: 'user');
+                    await UserDataCRUD.addNewUser(
+                      userModel: userModel,
+                      context: context,
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: amber,
+                    minimumSize: Size(width, height * 0.06),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: Text(
+                    'Proceed',
+                    style: textTheme.bodyMedium,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
