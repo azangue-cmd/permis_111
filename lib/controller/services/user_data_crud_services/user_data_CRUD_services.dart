@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/constants/constant_permis.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
+import 'package:permis_111/model/address_model.dart';
 import 'package:permis_111/model/user_model.dart';
 
 class UserDataCRUD {
@@ -49,14 +50,23 @@ class UserDataCRUD {
     log(userPresent.toString());
     return userPresent;
 
-    /*
-      if(value.docs.isEmpty){
-        log('User Not Found');
-        return false;
-      }else{
-        log('User Found');
-        return true;
-      }
-      */
+  }
+
+  static Future addUserAddress({required BuildContext context, required AddressModel addressModel})async{
+    try {
+      await firestore
+          .collection('Adresse')
+          .doc(auth.currentUser!.phoneNumber).collection('address').doc()
+          .set(addressModel.toMap())
+          .whenComplete(() { 
+        log('Data Added');
+        CommonFunction.showToast(
+            context: context, message: 'Address Added Successfull');
+        
+      });
+    } catch (e) {
+      log(e.toString());
+      CommonFunction.showToast(context: context, message: e.toString());
+    }
   }
 }

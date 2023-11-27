@@ -31,7 +31,7 @@ class AddressModel {
     return <String, dynamic>{
       'name': name,
       'mobileNumber': mobileNumber,
-      'authenticatedMobileNumber': authenticatedMobileNumber,
+      'authenticatedMobileNumber': authenticatedMobileNumber, // do not add textfield for this param  
       'houseNumber': houseNumber,
       'area': area,
       'landMark': landMark,
