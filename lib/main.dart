@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/utils/theme.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
       ],
       child: MaterialApp(
           theme: theme,
@@ -36,16 +38,16 @@ class MyApp extends StatelessWidget {
           // mobileNumber: '+237610101010', verificationId: '',
         //  ),
        
-          // home: StreamBuilder<User?>(
-          //   stream: auth.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
-          //   },
-          // ),
+          home: StreamBuilder<User?>(
+            stream: auth.authStateChanges(),
+            builder: (context, snapshot) {
+              return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
+            },
+          ),
           
           //home: const UserBottomNavBar(),
 
-          home: const AdressScreen()
+          //home: const AdressScreen()
           ),
     );
   }
