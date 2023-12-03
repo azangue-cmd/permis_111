@@ -3,15 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
+import 'package:permis_111/controller/provier/product_provider/product_provider.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/utils/theme.dart';
-import 'package:permis_111/view/user/address_screen/address_screen.dart';
-import 'package:permis_111/view/user/user_data_screen/user_data_input_screen.dart';
-import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
+import 'package:permis_111/view/seller/add_product_screen/widget/add_product_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'view/auth_screen/auth_sreen.dart';
-import 'view/auth_screen/otp_screen.dart';
+import 'view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
         ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
+        ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
       ],
       child: MaterialApp(
           theme: theme,
@@ -38,16 +36,17 @@ class MyApp extends StatelessWidget {
           // mobileNumber: '+237610101010', verificationId: '',
         //  ),
        
-          home: StreamBuilder<User?>(
-            stream: auth.authStateChanges(),
-            builder: (context, snapshot) {
-              return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
-            },
-          ),
+          // home: StreamBuilder<User?>(
+          //   stream: auth.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
+          //   },
+          // ),
           
+          home: const AddProductScreen()
           //home: const UserBottomNavBar(),
 
-          //home: const AdressScreen()
+          //home: const AddProductScreen()
           ),
     );
   }

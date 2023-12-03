@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -6,13 +5,8 @@ import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/pages/widgets/commonAuthButon.dart';
 import 'package:permis_111/utils/colors.dart';
 import 'package:permis_111/view/auth_screen/otp_screen.dart';
-import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
-
-import '../../controller/services/auth_services/auth_service.dart';
 import '../../controller/services/auth_services/function.dart';
 import '../../pages/widgets/bottomAuthScrenWidget.dart';
-//import '../../pages/widgets/createAccount.dart';
-//import '../../pages/widgets/signIn.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);

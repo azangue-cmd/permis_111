@@ -7,7 +7,6 @@ import 'package:permis_111/constants/constant_permis.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/model/address_model.dart';
 import 'package:permis_111/model/user_model.dart';
-import 'package:uuid/uuid.dart';
 
 class UserDataCRUD {
   static addNewUser({
@@ -104,15 +103,21 @@ class UserDataCRUD {
           .collection('address')
           .get();
 
-      snapshot.docs.forEach((element) {
-        allAddress.add(AddressModel.fromMap(element.data()));
-        AddressModel currentAddress = AddressModel.fromMap(element.data());
-        if (currentAddress.isDefault == true) {
-          defaultAddress = currentAddress;
-        }
-      });
-      
-          
+          for (var element in snapshot.docs) {
+            allAddress.add(AddressModel.fromMap(element.data()));
+            AddressModel currentAddress = AddressModel.fromMap(element.data());
+            if (currentAddress.isDefault == true) {
+              defaultAddress = currentAddress;
+            }
+          }
+
+      // snapshot.docs.forEach((element) {
+      //   allAddress.add(AddressModel.fromMap(element.data()));
+      //   AddressModel currentAddress = AddressModel.fromMap(element.data());
+      //   if (currentAddress.isDefault == true) {
+      //     defaultAddress = currentAddress;
+      //   }
+      // });
     } catch (e) {
       log('errot found');
       log(e.toString());
@@ -132,12 +137,19 @@ class UserDataCRUD {
           .collection('address')
           .get();
 
-      snapshot.docs.forEach((element) {
-        AddressModel currentAddress = AddressModel.fromMap(element.data());
-        if (currentAddress.isDefault == true) {
-          defaultAddress = currentAddress;
-        }
-      });
+          for (var element in snapshot.docs) {
+            AddressModel currentAddress = AddressModel.fromMap(element.data());
+            if (currentAddress.isDefault == true) {
+              defaultAddress = currentAddress;
+            }
+          }
+
+      // snapshot.docs.forEach((element) {
+      //   AddressModel currentAddress = AddressModel.fromMap(element.data());
+      //   if (currentAddress.isDefault == true) {
+      //     defaultAddress = currentAddress;
+      //   }
+      // });
       
           
     } catch (e) {

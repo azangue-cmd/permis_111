@@ -1,12 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
-import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 import 'package:pinput/pinput.dart';
 import '../../controller/services/auth_services/function.dart';
 import '../../pages/widgets/bottomAuthScrenWidget.dart';

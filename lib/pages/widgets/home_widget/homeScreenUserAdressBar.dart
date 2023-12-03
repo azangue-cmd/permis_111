@@ -28,7 +28,8 @@ class HomeScreenUserAdressBar extends StatelessWidget {
       ),
       child:
           Consumer<AddressProvider>(builder: (context, addresPovider, child) {
-        if (addresPovider.fetchedCurrentSelectedAddress == true) {
+        if (addresPovider.fetchedCurrentSelectedAddress && 
+              addresPovider.addressPresent) {
           AddressModel selectedAddress = addresPovider.currentSelectedAddress;
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -41,11 +42,10 @@ class HomeScreenUserAdressBar extends StatelessWidget {
               Text(
                 'Deliver to ${selectedAddress.name} - ${selectedAddress.town}, ${selectedAddress.state}',
                 style: textTheme.bodySmall,
-                )
+              )
             ],
           );
-        }
-        else {
+        } else {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -54,13 +54,13 @@ class HomeScreenUserAdressBar extends StatelessWidget {
                 color: black,
               ),
               CommonFunction.blankSpace(0, width * 0.02),
-               Text(
+              Text(
                 'Deliver to user - City - State',
                 style: textTheme.bodySmall,
-                )
+              )
             ],
           );
-        } 
+        }
       }),
     );
   }

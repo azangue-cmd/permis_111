@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 const String keySecret = '<Razorpay Key Secrets>';
 const String keyID = '<Razorpay Key ID>';
-
+FirebaseStorage storage = FirebaseStorage.instance;
+final picker = ImagePicker();
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -51,6 +54,7 @@ List<String> permisClothingDealsList = [
 ];
 
 List<String> permisCategories = [
+  'Select Category',
   'care',
   'chinoise',
   'finess',
