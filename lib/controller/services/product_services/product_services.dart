@@ -23,7 +23,7 @@ class ProductServices {
     );
     List<XFile> filePick = pickedFile;
 
-    if (filePick.isNotEmpty) {
+    if (filePick.isNotEmpty) {  
       for (var i = 0; i < filePick.length; i++) {
         selectedImages.add(File(filePick[i].path));
       }
@@ -51,7 +51,7 @@ class ProductServices {
     });
 
     context
-        .read<ProductProvider>()
+        .read<ProductProvider>() 
         .updateProductImagesURL(imageURLs: imagesURL);
   }
 

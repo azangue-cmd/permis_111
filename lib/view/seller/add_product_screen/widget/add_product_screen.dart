@@ -1,4 +1,6 @@
 
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +45,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
   }
 
-  onPressed() async {     
+   onPressed() async {     
     if (context.read<ProductProvider>().productImages.isNotEmpty) {
       setState(() {
         addProductBtnPressed = true;
@@ -85,7 +87,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       );
 
       await ProductServices.addProduct(context: context, productModel: model);
-      CommonFunction.showSuccessToast(
+      CommonFunction.showToast(
           context: context, message: 'Product Added Successful');
     }
   }

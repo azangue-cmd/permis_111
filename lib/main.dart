@@ -6,9 +6,12 @@ import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/controller/provier/product_provider/product_provider.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/utils/theme.dart';
-import 'package:permis_111/view/seller/add_product_screen/widget/add_product_screen.dart';
+import 'package:permis_111/view/auth_screen/auth_sreen.dart';
+import 'package:permis_111/view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
+
+import 'view/seller/add_product_screen/widget/add_product_screen.dart';
+import 'view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,9 +46,9 @@ class MyApp extends StatelessWidget {
           //   },
           // ),
           
-          home: const AddProductScreen()
+           //home: const AddProductScreen()
           //home: const UserBottomNavBar(),
-
+           home: const SellerBottomNavBar(),
           //home: const AddProductScreen()
           ),
     );

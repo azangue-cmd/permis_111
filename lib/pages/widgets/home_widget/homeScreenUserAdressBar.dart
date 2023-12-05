@@ -28,8 +28,7 @@ class HomeScreenUserAdressBar extends StatelessWidget {
       ),
       child:
           Consumer<AddressProvider>(builder: (context, addresPovider, child) {
-        if (addresPovider.fetchedCurrentSelectedAddress && 
-              addresPovider.addressPresent) {
+        if (addresPovider.fetchedCurrentSelectedAddress == true) {
           AddressModel selectedAddress = addresPovider.currentSelectedAddress;
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
