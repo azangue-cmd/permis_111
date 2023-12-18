@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../model/product_model.dart';
 import '../../services/product_services/product_services.dart';
 
-class ProductProvider extends ChangeNotifier {
+class SellerProductProvider extends ChangeNotifier {
   List<File> productImages = [];
   List<String> productImagesURL = [];
   List<ProductModel> products = [];

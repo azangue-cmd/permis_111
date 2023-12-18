@@ -52,6 +52,26 @@ class UserDataCRUD {
     return userPresent;
   }
 
+  static Future<bool> userIsSeller() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await firestore
+          .collection('users')
+          .doc(auth.currentUser!.phoneNumber)
+          .get();
+      if (snapshot.exists) {
+        UserModel userModel = UserModel.fromMap(snapshot.data()!);
+        log('User Type is: ${userModel.userType}');
+        if (userModel.userType != 'user') {
+          return true;
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return false;
+  }
+
+
   static Future addUserAddress({
     required BuildContext context,
     required AddressModel addressModel,
@@ -93,7 +113,7 @@ class UserDataCRUD {
     return addressPresent;
   }
 
-  static Future <List<AddressModel>> getAllAddress() async {
+  static Future<List<AddressModel>> getAllAddress() async {
     List<AddressModel> allAddress = [];
     AddressModel defaultAddress = AddressModel();
     try {
@@ -103,13 +123,13 @@ class UserDataCRUD {
           .collection('address')
           .get();
 
-          for (var element in snapshot.docs) {
-            allAddress.add(AddressModel.fromMap(element.data()));
-            AddressModel currentAddress = AddressModel.fromMap(element.data());
-            if (currentAddress.isDefault == true) {
-              defaultAddress = currentAddress;
-            }
-          }
+      for (var element in snapshot.docs) {
+        allAddress.add(AddressModel.fromMap(element.data()));
+        AddressModel currentAddress = AddressModel.fromMap(element.data());
+        if (currentAddress.isDefault == true) {
+          defaultAddress = currentAddress;
+        }
+      }
 
       // snapshot.docs.forEach((element) {
       //   allAddress.add(AddressModel.fromMap(element.data()));
@@ -137,12 +157,12 @@ class UserDataCRUD {
           .collection('address')
           .get();
 
-          for (var element in snapshot.docs) {
-            AddressModel currentAddress = AddressModel.fromMap(element.data());
-            if (currentAddress.isDefault == true) {
-              defaultAddress = currentAddress;
-            }
-          }
+      for (var element in snapshot.docs) {
+        AddressModel currentAddress = AddressModel.fromMap(element.data());
+        if (currentAddress.isDefault == true) {
+          defaultAddress = currentAddress;
+        }
+      }
 
       // snapshot.docs.forEach((element) {
       //   AddressModel currentAddress = AddressModel.fromMap(element.data());
@@ -150,12 +170,10 @@ class UserDataCRUD {
       //     defaultAddress = currentAddress;
       //   }
       // });
-      
-          
     } catch (e) {
       log('errot found');
       log(e.toString());
     }
     return defaultAddress;
-  } 
+  }
 }

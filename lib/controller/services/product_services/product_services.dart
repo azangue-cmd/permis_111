@@ -51,7 +51,7 @@ class ProductServices {
     });
 
     context
-        .read<ProductProvider>() 
+        .read<SellerProductProvider>() 
         .updateProductImagesURL(imageURLs: imagesURL);
   }
 
@@ -66,7 +66,7 @@ class ProductServices {
           .set(productModel.toMap())
           .whenComplete(() {
         log('Data Added');
-        context.read<ProductProvider>()
+        context.read<SellerProductProvider>()
         .fecthSellerProducts();
         Navigator.pop(context);
 
@@ -77,7 +77,7 @@ class ProductServices {
       log(e.toString());
       CommonFunction.showToast(context: context, message: e.toString());
     }
-  }
+  } 
 
   static Future<List<ProductModel>> getSellersProducts() async {
     List<ProductModel> sellersProducts = [];

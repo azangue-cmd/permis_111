@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/controller/services/auth_services/auth_service.dart';
 import 'package:permis_111/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:permis_111/view/auth_screen/auth_sreen.dart';
+import 'package:permis_111/view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
 import 'package:permis_111/view/user/user_data_screen/user_data_input_screen.dart';
 import 'package:permis_111/view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 
@@ -21,27 +22,40 @@ class _SignInLogicState extends State<SignInLogic> {
     bool userAlreadyThere = await UserDataCRUD.checkUser();
     log(userAlreadyThere.toString());
     if (userAlreadyThere == true) {
+      bool userIsSeller = await UserDataCRUD.userIsSeller();
+      log('start');
+      log(userIsSeller.toString());
+      if (userIsSeller == false) {
+
+
+        Navigator.push(
+          context,
+          PageTransition(
+            child: const SellerBottomNavBar(),
+            type: PageTransitionType.rightToLeft,
+          ),
+        );
+      }else{
+
+        
       Navigator.push(
           context,
           PageTransition(
             child: const UserBottomNavBar(),
             type: PageTransitionType.rightToLeft,
           ));
+      }
     } else {
-
       Navigator.push(
-        context,
-        PageTransition(
-          child: const UserDataInputScreen(),
-          type: PageTransitionType.rightToLeft,
-        ));
+          context,
+          PageTransition(
+            child: const UserDataInputScreen(),
+            type: PageTransitionType.rightToLeft,
+          ));
 
       //Navigator.of(context)
-         // .push(MaterialPageRoute(builder: (c) => const UserDataInputScreen()));
+      // .push(MaterialPageRoute(builder: (c) => const UserDataInputScreen()));
     }
-
-    
-        
   }
 
   chechAuthentication() {

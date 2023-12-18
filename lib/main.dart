@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/controller/provier/product_provider/product_provider.dart';
+import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/auth_screen/auth_sreen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
         ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
-        ChangeNotifierProvider<ProductProvider>(create: (_) => ProductProvider()),
+        ChangeNotifierProvider<SellerProductProvider>(create: (_) => SellerProductProvider()),
       ],
       child: MaterialApp(
           theme: theme,
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           //home: const UserBottomNavBar(),
            home: const SellerBottomNavBar(),
           //home: const AddProductScreen()
+         // home: const SignInLogic()
           ),
     );
   }

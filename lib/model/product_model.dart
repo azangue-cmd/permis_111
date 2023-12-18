@@ -68,7 +68,7 @@ class ProductModel {
       manufacturerName: map['manufacturerName'] != null
           ? map['manufacturerName'] as String
           : null,
-      countryOfOrigin: map['countryOfOrigin'] != null
+      countryOfOrigin: map['countryOfOrigin'] != null 
           ? map['countryOfOrigin'] as String
           : null,
       specifications: map['specifications'] != null
