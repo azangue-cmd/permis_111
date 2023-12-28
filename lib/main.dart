@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/controller/provier/product_provider/product_provider.dart';
+import 'package:permis_111/controller/provier/user_product_provider/users_product_provider.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/auth_screen/auth_sreen.dart';
 import 'package:permis_111/view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
+import 'package:permis_111/view/user/product_screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'view/seller/add_product_screen/widget/add_product_screen.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
         ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
         ChangeNotifierProvider<SellerProductProvider>(create: (_) => SellerProductProvider()),
+        ChangeNotifierProvider<UsersProductProvider>(create: (_) => UsersProductProvider()),
       ],
       child: MaterialApp(
           theme: theme,
@@ -40,16 +43,18 @@ class MyApp extends StatelessWidget {
           // mobileNumber: '+237610101010', verificationId: '',
         //  ),
        
-          // home: StreamBuilder<User?>(
-          //   stream: auth.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
-          //   },
-          // ),
+          home: StreamBuilder<User?>(
+            stream: auth.authStateChanges(),
+            builder: (context, snapshot) {
+              return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
+            },
+          ),
+
+          
           
            //home: const AddProductScreen()
           //home: const UserBottomNavBar(),
-           home: const SellerBottomNavBar(),
+           //home: const SellerBottomNavBar(),
           //home: const AddProductScreen()
          // home: const SignInLogic()
           ),

@@ -23,7 +23,7 @@ class UsersProductService {
           .orderBy('name')
           .startAt([productName.toUpperCase()]).endAt(
               ['${productName.toLowerCase()}\uf8ff']).get();
-
+ 
       snapshot.docs.forEach((element) {
         sellersProducts.add(ProductModel.fromMap(element.data()));
       });
@@ -39,7 +39,7 @@ class UsersProductService {
   static Future addProductToCart({
     required BuildContext context,
     required UserProductModel productModel,
-  }) async {
+   }) async {
     try {
       await firestore
           .collection('Cart')

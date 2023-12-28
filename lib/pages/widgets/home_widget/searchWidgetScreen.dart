@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:permis_111/controller/services/product_services/product_services.dart';
+import 'package:permis_111/view/user/searched_product_creen/searched_product_screen.dart';
 
 import '../../../utils/colors.dart';
 
@@ -12,7 +15,6 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
@@ -24,7 +26,12 @@ class SearchWidget extends StatelessWidget {
           width: width * 0.8,
           child: TextField(
             onTap: () {
-            
+              Navigator.push(
+                  context,
+                  PageTransition(
+                    child: const ProductDisplayScreen(),
+                    type: PageTransitionType.rightToLeft,
+                  ));
             },
             cursorColor: black,
             decoration: InputDecoration(
@@ -40,14 +47,12 @@ class SearchWidget extends StatelessWidget {
               ),
               suffixIcon: IconButton(
                 onPressed: () {},
-                
                 icon: Icon(
                   Icons.camera_alt_sharp,
                   color: grey,
                 ),
               ),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: width * 0.03),
+              contentPadding: EdgeInsets.symmetric(horizontal: width * 0.03),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(color: grey),
@@ -69,11 +74,12 @@ class SearchWidget extends StatelessWidget {
                 borderSide: BorderSide(color: grey),
               ),
             ),
-            
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            ProductServices.getImages(context: context);
+          },
           icon: Icon(
             Icons.mic,
             color: black,
