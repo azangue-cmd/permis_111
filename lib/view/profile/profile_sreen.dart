@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
+import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/services/auth_services/function.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/product_model.dart';
 import 'package:permis_111/utils/colors.dart';
 import 'package:permis_111/view/user/product_screen/product_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../../model/address_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -427,6 +431,7 @@ class YouGridBtons extends StatelessWidget {
             }
             return Text(
               'Your Wish List',
+              
               style: textTheme.bodyMedium,
             );
           }),
@@ -450,29 +455,58 @@ class UserGreetingsYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   // AddressModel selectedAddress = addresPovider.currentSelectedAddress;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-      child: Row(
-        children: [
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(text: 'Bonjour, ', style: textTheme.bodyLarge),
-                TextSpan(
-                  text: 'Monsieur',
-                  style: textTheme.bodyLarge!
-                      .copyWith(fontWeight: FontWeight.bold),
+      child: Consumer<AddressProvider>(builder: (context, addresPovider, child){
+        if (addresPovider.fetchedCurrentSelectedAddress == true) {
+          AddressModel selectedAddress = addresPovider.currentSelectedAddress;
+          return Row(
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(text: 'Bonjour, ', style: textTheme.bodyLarge),
+                    TextSpan(
+                      text: '${selectedAddress.name}',
+                      style: textTheme.bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          const Spacer(),
-          CircleAvatar(
-            backgroundColor: greyShade3,
-            radius: height * 0.025,
-          ),
-        ],
-      ),
+              ),
+              const Spacer(),
+              CircleAvatar(
+                backgroundColor: greyShade3,
+                radius: height * 0.025,
+              ),
+            ],
+          );
+        } else {
+          return Row(
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(text: 'Bonjour, ', style: textTheme.bodyLarge),
+                    TextSpan(
+                      text: 'Monsieur',
+                      style: textTheme.bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              CircleAvatar(
+                backgroundColor: greyShade3,
+                radius: height * 0.025,
+              ),
+            ],
+          );
+        }
+      }),
+      
     );
   }
 }

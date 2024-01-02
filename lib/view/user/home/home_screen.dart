@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/constants/constant_permis.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
+import 'package:permis_111/controller/provier/deal_of_the_day_provider/deal_of_the_provider.dart';
 import 'package:permis_111/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:provider/provider.dart';
 import '../../../pages/widgets/home_widget/homeScreenBanner.dart';
@@ -158,6 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkUserAddress();
       context.read<AddressProvider>().getCurrentSelectedAddress();
+      context.read<DealOfTheDayProvider>().fetchTodayDeals();
     });
   }
 

@@ -62,9 +62,8 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
           child: Container(
             height: height,
             width: width,
-            padding: EdgeInsets.symmetric(
-              horizontal: width * 0.03,
-              vertical: height * 0.02,
+            padding: EdgeInsets.all(
+              16
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,

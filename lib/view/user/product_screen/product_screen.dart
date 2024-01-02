@@ -390,7 +390,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                       TextSpan(
                         text:
-                            '\t\t ${widget.productModel.price!.toStringAsFixed(0)}\tfrcs',
+                            '\t\t ${widget.productModel.discountedPrice!.toStringAsFixed(0)}\tfrcs',
                         style: textTheme.displayLarge!.copyWith(
                           color: black,
                           fontWeight: FontWeight.w600,

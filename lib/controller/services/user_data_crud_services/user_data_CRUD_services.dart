@@ -14,7 +14,7 @@ class UserDataCRUD {
     required BuildContext context,
   }) async {
     try {
-      await firestore
+      var user = await firestore
           .collection('users')
           .doc(auth.currentUser!.phoneNumber)
           .set(userModel.toMap())
@@ -60,7 +60,8 @@ class UserDataCRUD {
           .get();
       if (snapshot.exists) {
         UserModel userModel = UserModel.fromMap(snapshot.data()!);
-        log('User Type is: ${userModel.userType}');
+        print("----------------------------------------------");
+        print('User Type is: ${userModel.userType}');
         if (userModel.userType != 'user') {
           return true;
         }
@@ -70,7 +71,6 @@ class UserDataCRUD {
     }
     return false;
   }
-
 
   static Future addUserAddress({
     required BuildContext context,

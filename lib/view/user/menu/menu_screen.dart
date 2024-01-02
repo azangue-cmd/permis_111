@@ -54,11 +54,12 @@ class _MenuScreenState extends State<MenuScreen> {
                       return Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: greyShade3),
+                          color: white,
                           image: DecorationImage(
                             image: AssetImage(
                               'assets/images/menus_permis/$index.jpg',
                             ),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.contain,
                           ),
                           //color: Colors.white,
                           borderRadius: BorderRadius.circular(10),

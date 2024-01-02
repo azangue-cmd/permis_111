@@ -3,17 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
+import 'package:permis_111/controller/provier/deal_of_the_day_provider/deal_of_the_provider.dart';
+import 'package:permis_111/controller/provier/product_by_category_provider/product_by_category_provider.dart';
 import 'package:permis_111/controller/provier/product_provider/product_provider.dart';
 import 'package:permis_111/controller/provier/user_product_provider/users_product_provider.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/utils/theme.dart';
-import 'package:permis_111/view/auth_screen/auth_sreen.dart';
-import 'package:permis_111/view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
-import 'package:permis_111/view/user/product_screen/product_screen.dart';
+import 'package:permis_111/view/chatbot.dart';
 import 'package:provider/provider.dart';
-
+import 'view/auth_screen/auth_sreen.dart';
 import 'view/seller/add_product_screen/widget/add_product_screen.dart';
+import 'view/seller/seller_persistant_nav_bar/seller_bottom_nav_bar.dart';
 import 'view/user_persistant_nav_bar/user_bottom_nav_bar.dart';
 
 Future main() async {
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AddressProvider>(create: (_) => AddressProvider()),
         ChangeNotifierProvider<SellerProductProvider>(create: (_) => SellerProductProvider()),
         ChangeNotifierProvider<UsersProductProvider>(create: (_) => UsersProductProvider()),
+        ChangeNotifierProvider<DealOfTheDayProvider>(create: (_) => DealOfTheDayProvider()),
+        ChangeNotifierProvider<ProductsBasedOnCategoryProvider>(create: (_) => ProductsBasedOnCategoryProvider()),
       ],
       child: MaterialApp(
           theme: theme,
@@ -46,7 +49,7 @@ class MyApp extends StatelessWidget {
           home: StreamBuilder<User?>(
             stream: auth.authStateChanges(),
             builder: (context, snapshot) {
-              return snapshot.data == null ? const AuthScreen() : const UserBottomNavBar();
+              return snapshot.data == null ? const AuthScreen() : const SignInLogic();
             },
           ),
 
@@ -55,7 +58,7 @@ class MyApp extends StatelessWidget {
            //home: const AddProductScreen()
           //home: const UserBottomNavBar(),
            //home: const SellerBottomNavBar(),
-          //home: const AddProductScreen()
+         //home: const AddProductScreen()
          // home: const SignInLogic()
           ),
     );

@@ -34,93 +34,94 @@ class _CartScreenState extends State<CartScreen> {
             horizontal: width * 0.03,
             vertical: height * 0.02,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                StreamBuilder(
-                    stream: UsersProductService.fetchCartProducts(),
-                    builder: (context, snapshot) {
-                      if(snapshot.data!.isEmpty){
-                        return  Center(
-                          child: Text(
-                            'No Product Addet to Cart',
-                            style: textTheme.bodyMedium,
-                            ),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        List<UserProductModel> cartProducts = snapshot.data!;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: 'Subtotal ',
-                                      style: textTheme.bodyLarge),
-                                  TextSpan(
-                                    text: '${cartProducts.fold(0.0, (previousValue, produc) => previousValue + (produc.discountedPrice! * produc.productCount!)).toStringAsFixed(0)} frcs',
-                                    style: textTheme.displaySmall!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            CommonFunction.blankSpace(height * 0.01, 0),
-                            SizedBox(
-                              height: height * 0.06,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.check_circle,
-                                    color: teal,
-                                  ),
-                                  CommonFunction.blankSpace(0, width * 0.01),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        RichText(
-                                            textAlign: TextAlign.justify,
-                                            text: TextSpan(children: [
-                                              TextSpan(
-                                                text:
-                                                    'Your order is eligible for free delivery. ',
-                                                style: textTheme.bodyMedium!
-                                                    .copyWith(
-                                                        color: teal,
-                                                        fontSize: 13),
-                                              ),
-                                              TextSpan(
-                                                  text:
-                                                      ' Select this option at checkout.',
-                                                  style: textTheme.bodyMedium!
-                                                      .copyWith(fontSize: 14)),
-                                            ])),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: amber,
-                                  minimumSize: Size(width, height * 0.06),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: [
+              StreamBuilder(
+                  stream: UsersProductService.fetchCartProducts(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data!.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No Product Addet to Cart',
+                          style: textTheme.bodyMedium,
+                        ),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      List<UserProductModel> cartProducts = snapshot.data!;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: 'Subtotal ',
+                                    style: textTheme.bodyLarge),
+                                TextSpan(
+                                  text:
+                                      '${cartProducts.fold(0.0, (previousValue, produc) => previousValue + (produc.discountedPrice! * produc.productCount!)).toStringAsFixed(0)} frcs',
+                                  style: textTheme.displaySmall!.copyWith(
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                child: Text('Proceed to Buy',
-                                    style: textTheme.bodyMedium)),
-                            CommonFunction.blankSpace(height * 0.01, 0),
-                            CommonFunction.divider(),
-                            CommonFunction.blankSpace(height * 0.01, 0),
-                            ListView.builder(
+                              ],
+                            ),
+                          ),
+                          CommonFunction.blankSpace(height * 0.01, 0),
+                          SizedBox(
+                            height: height * 0.06,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  color: teal,
+                                ),
+                                CommonFunction.blankSpace(0, width * 0.01),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      RichText(
+                                          textAlign: TextAlign.justify,
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                              text:
+                                                  'Your order is eligible for free delivery. ',
+                                              style: textTheme.bodyMedium!
+                                                  .copyWith(
+                                                      color: teal,
+                                                      fontSize: 13),
+                                            ),
+                                            TextSpan(
+                                                text:
+                                                    ' Select this option at checkout.',
+                                                style: textTheme.bodyMedium!
+                                                    .copyWith(fontSize: 14)),
+                                          ])),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: amber,
+                                minimumSize: Size(width, height * 0.06),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              child: Text('Proceed to Buy',
+                                  style: textTheme.bodyMedium)),
+                          CommonFunction.blankSpace(height * 0.01, 0),
+                          CommonFunction.divider(),
+                          CommonFunction.blankSpace(height * 0.01, 0),
+                          SizedBox(
+                            height: height * 0.57,
+                            child: ListView.builder(
                                 itemCount: cartProducts.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
@@ -398,17 +399,17 @@ class _CartScreenState extends State<CartScreen> {
                                     ),
                                   );
                                 }),
-                          ],
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return const Text('Error Found');
-                      } else {
-                        return const Text('No Product Addet to Cart');
-                      }
-                    }),
-              ],
-            ),
+                          ),
+                        ],
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Text('Error Found');
+                    } else {
+                      return const Text('No Product Addet to Cart');
+                    }
+                  }),
+            ],
           ),
         ),
       ),

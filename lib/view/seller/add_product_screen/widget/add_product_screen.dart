@@ -9,7 +9,6 @@ import 'package:permis_111/view/seller/add_product_screen/widget/product_details
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../constants/constant_permis.dart';
-import '../../../../constants/constants.dart';
 import '../../../../controller/provier/product_provider/product_provider.dart';
 import '../../../../controller/services/product_services/product_services.dart';
 import '../../../../model/product_model.dart';
@@ -88,7 +87,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       await ProductServices.addProduct(context: context, productModel: model);
       CommonFunction.showToast(
-          context: context, message: 'Product Added Successful');
+          context: context, message: 'Ajouter avec succès');
     }
   }
 
@@ -131,7 +130,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           color: white,
                         )
                       : Text(
-                          'Add Product',
+                          'Ajouter',
                           style: textTheme.bodyMedium,
                         )),
               CommonFunction.blankSpace(height * 0.03, 0),
@@ -146,8 +145,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return Column(
       children: [
         AddProductCommonTextField(
-          title: 'Product Name',
-          hintText: 'name',
+          title: 'Nom Produit',
+          hintText: 'nom',
           textController: productNameController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
@@ -160,39 +159,39 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
-          title: 'Manufacturer Name',
-          hintText: 'name',
+          title: 'Fabricant',
+          hintText: 'nom',
           textController: manufacturerNameController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
-          title: 'Brand Name',
-          hintText: 'name',
+          title: 'Marque',
+          hintText: 'marque',
           textController: brandNameController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
-          title: 'Country of Origin',
-          hintText: '',
+          title: 'Pays d’origine',
+          hintText: 'pays',
           textController: countryOfOriginController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
-          title: 'Product Specification',
+          title: 'Specification du produit',
           hintText: 'specification',
           textController: productSpecificationsController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
-          title: 'Product Price',
-          hintText: 'price',
+          title: 'Prix du produit',
+          hintText: 'prix',
           textController: productPriceController,
           textInputType: TextInputType.number,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
-          title: 'Discounted Product Price',
-          hintText: 'Discounted price',
+          title: 'Prix réduit du produit',
+          hintText: 'prix réduit',
           textController: discountedProductPriceController,
           textInputType: TextInputType.number,
         ),
@@ -206,7 +205,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Product Category',
+          'Catégorie du produit',
           style: textTheme.bodyMedium,
         ),
         CommonFunction.blankSpace(
@@ -281,7 +280,7 @@ class AddProductAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Add Product',
+            'Ajout produit',
             style:
                 textTheme.displayMedium!.copyWith(fontWeight: FontWeight.bold),
           )
@@ -333,7 +332,7 @@ class ProductImageBanner extends StatelessWidget {
                     color: greyShade3,
                   ),
                   Text(
-                    'Add Product',
+                    'Photos du produit',
                     style: textTheme.displayMedium!.copyWith(
                       color: greyShade3,
                     ),

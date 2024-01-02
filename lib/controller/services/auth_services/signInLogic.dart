@@ -25,7 +25,7 @@ class _SignInLogicState extends State<SignInLogic> {
       bool userIsSeller = await UserDataCRUD.userIsSeller();
       log('start');
       log(userIsSeller.toString());
-      if (userIsSeller == false) {
+      if (userIsSeller == true) {
 
 
         Navigator.push(
@@ -36,8 +36,6 @@ class _SignInLogicState extends State<SignInLogic> {
           ),
         );
       }else{
-
-        
       Navigator.push(
           context,
           PageTransition(
