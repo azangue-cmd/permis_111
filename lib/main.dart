@@ -6,6 +6,7 @@ import 'package:permis_111/controller/provier/auth_provider/auth_provider.dart';
 import 'package:permis_111/controller/provier/deal_of_the_day_provider/deal_of_the_provider.dart';
 import 'package:permis_111/controller/provier/product_by_category_provider/product_by_category_provider.dart';
 import 'package:permis_111/controller/provier/product_provider/product_provider.dart';
+import 'package:permis_111/controller/provier/rating_provider/rating_provider.dart';
 import 'package:permis_111/controller/provier/user_product_provider/users_product_provider.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/firebase_options.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UsersProductProvider>(create: (_) => UsersProductProvider()),
         ChangeNotifierProvider<DealOfTheDayProvider>(create: (_) => DealOfTheDayProvider()),
         ChangeNotifierProvider<ProductsBasedOnCategoryProvider>(create: (_) => ProductsBasedOnCategoryProvider()),
+        ChangeNotifierProvider<RatingProvider>(create: (_) => RatingProvider()),
       ],
       child: MaterialApp(
           theme: theme,

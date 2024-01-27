@@ -6,6 +6,7 @@ import 'package:permis_111/controller/services/auth_services/function.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/product_model.dart';
 import 'package:permis_111/utils/colors.dart';
+import 'package:permis_111/view/profile/navbar.dart';
 import 'package:permis_111/view/user/product_screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -26,51 +27,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
+        drawer: const NavBar(),
         appBar: PreferredSize(
           preferredSize: Size(width, height * 0.08),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: width * 0.03, vertical: height * 0.01),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: appBarGradientColor,
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-            child: Row(
-              children: [
-                Image(
-                  image: const AssetImage(
-                    'assets/images/permis111_5.png',
-                  ),
-                  height: height * 0.02,
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () async {
-                    await disconnect();
-                  },
-                  icon: const Icon(Icons.power),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.notifications_none,
-                    color: Colors.black,
-                    size: height * 0.035,
+          child: Builder(
+            builder: (context) {
+              return Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.03, vertical: height * 0.01),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: appBarGradientColor,
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                    size: height * 0.035,
-                  ),
+                child: Row(
+                  children: [ 
+                    IconButton(onPressed: () => Scaffold.of(context).openDrawer(
+                    ), icon: const Icon(Icons.menu),),
+                    Image(
+                      image: const AssetImage(
+                        'assets/images/permis111_5.png',
+                      ),
+                      height: height * 0.02,
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () async {
+                        await disconnect();
+                      },
+                      icon: const Icon(Icons.power),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.notifications_none,
+                        color: Colors.black,
+                        size: height * 0.035,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                        size: height * 0.035,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            }
           ),
         ),
         body: SingleChildScrollView(
@@ -83,9 +91,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 UserGreetingsYouScreen(
                     width: width, textTheme: textTheme, height: height),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                YouGridBtons(width: width, textTheme: textTheme),
-                CommonFunction.blankSpace(height * 0.02, 0),
+               // CommonFunction.blankSpace(height * 0.01, 0),
+                //YouGridBtons(width: width, textTheme: textTheme),
+               // CommonFunction.blankSpace(height * 0.02, 0),
                 UsersOrders(width: width, height: height, textTheme: textTheme),
                 CommonFunction.blankSpace(height * 0.01, 0),
                 CommonFunction.divider(),
