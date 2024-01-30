@@ -10,8 +10,10 @@ import 'package:permis_111/controller/provier/rating_provider/rating_provider.da
 import 'package:permis_111/controller/provier/user_product_provider/users_product_provider.dart';
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/firebase_options.dart';
+import 'package:permis_111/pages/splash_screen/splashscreen.dart';
 import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/chatbot.dart';
+import 'package:permis_111/view/user/orders_screen/orders_screen.dart';
 import 'package:provider/provider.dart';
 import 'view/auth_screen/auth_sreen.dart';
 import 'view/seller/add_product_screen/widget/add_product_screen.dart';
@@ -48,15 +50,15 @@ class MyApp extends StatelessWidget {
           // mobileNumber: '+237610101010', verificationId: '',
         //  ),
        
-          home: StreamBuilder<User?>(
-            stream: auth.authStateChanges(),
-            builder: (context, snapshot) {
-              return snapshot.data == null ? const AuthScreen() : const SignInLogic();
-            },
-          ),
+          // home: StreamBuilder<User?>(
+          //   stream: auth.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     return snapshot.data == null ? const AuthScreen() : const SignInLogic();
+          //   },
+          // ),
 
           
-          
+          home: const SplashScreen(),
            //home: const AddProductScreen()
           //home: const UserBottomNavBar(),
            //home: const SellerBottomNavBar(),

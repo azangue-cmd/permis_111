@@ -254,8 +254,4 @@ class UsersProductService {
     log(sellersProducts.toList().toString());
     return sellersProducts;
   }
-
-  
-
-
 }

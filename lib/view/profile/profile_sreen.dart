@@ -5,12 +5,14 @@ import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/services/auth_services/function.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/product_model.dart';
+import 'package:permis_111/model/user_product_model.dart';
 import 'package:permis_111/utils/colors.dart';
 import 'package:permis_111/view/profile/navbar.dart';
 import 'package:permis_111/view/user/product_screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/address_model.dart';
+import '../user/orders_screen/orders_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -30,56 +32,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
         drawer: const NavBar(),
         appBar: PreferredSize(
           preferredSize: Size(width, height * 0.08),
-          child: Builder(
-            builder: (context) {
-              return Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: width * 0.03, vertical: height * 0.01),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: appBarGradientColor,
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
+          child: Builder(builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.03, vertical: height * 0.01),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: appBarGradientColor,
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    icon: const Icon(Icons.menu),
                   ),
-                ),
-                child: Row(
-                  children: [ 
-                    IconButton(onPressed: () => Scaffold.of(context).openDrawer(
-                    ), icon: const Icon(Icons.menu),),
-                    Image(
-                      image: const AssetImage(
-                        'assets/images/permis111_5.png',
-                      ),
-                      height: height * 0.02,
+                  Image(
+                    image: const AssetImage(
+                      'assets/images/permis111_5.png',
                     ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () async {
-                        await disconnect();
-                      },
-                      icon: const Icon(Icons.power),
+                    height: height * 0.02,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () async {
+                      await disconnect();
+                    },
+                    icon: const Icon(Icons.power),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.notifications_none,
+                      color: Colors.black,
+                      size: height * 0.035,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.notifications_none,
-                        color: Colors.black,
-                        size: height * 0.035,
-                      ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                      size: height * 0.035,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.black,
-                        size: height * 0.035,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          ),
+                  ),
+                ],
+              ),
+            );
+          }),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -91,9 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 UserGreetingsYouScreen(
                     width: width, textTheme: textTheme, height: height),
-               // CommonFunction.blankSpace(height * 0.01, 0),
-                //YouGridBtons(width: width, textTheme: textTheme),
-               // CommonFunction.blankSpace(height * 0.02, 0),
+                // CommonFunction.blankSpace(height * 0.01, 0),
+                YouGridBtons(width: width, textTheme: textTheme),
+                CommonFunction.blankSpace(height * 0.02, 0),
                 UsersOrders(width: width, height: height, textTheme: textTheme),
                 CommonFunction.blankSpace(height * 0.01, 0),
                 CommonFunction.divider(),
@@ -333,57 +335,188 @@ class UsersOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: width * 0.04, vertical: height * 0.01),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'You Orders ',
-                style:
-                    textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-              ),
-              TextButton(
-                onPressed: () {},
+    return StreamBuilder<List<UserProductModel>>(
+        stream: UsersProductService.fetchOrders(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty) {
+              return Container(
+                height: height * 0.15,
+                width: width,
+                alignment: Alignment.center,
                 child: Text(
-                  'See all',
-                  style: textTheme.bodySmall!.copyWith(
-                    color: blue,
-                  ),
+                  'Opps!! Your didnt oder anything yet!!!',
+                  style: textTheme.displayMedium,
                 ),
+              );
+            } else {
+              List<UserProductModel> orders = snapshot.data!;
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.04, vertical: height * 0.01),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'You Orders ',
+                          style: textTheme.bodyLarge!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'See all',
+                            style: textTheme.bodySmall!.copyWith(
+                              color: blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    CommonFunction.blankSpace(height * 0.01, 0),
+                    SizedBox(
+                      height: height * 0.2,
+                      child: ListView.builder(
+                          itemCount: orders.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: const PageScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            UserProductModel currentProduct = orders[index];
+                            return InkWell(
+                              onTap: () {
+                                ProductModel product = ProductModel(
+                                  imagesURL: currentProduct.imagesURL,
+                                  name: currentProduct.name,
+                                  category: currentProduct.category,
+                                  description: currentProduct.description,
+                                  brandName: currentProduct.brandName,
+                                  manufacturerName:
+                                      currentProduct.manufacturerName,
+                                  countryOfOrigin:
+                                      currentProduct.countryOfOrigin,
+                                  specifications: currentProduct.specifications,
+                                  price: currentProduct.price,
+                                  discountedPrice:
+                                      currentProduct.discountedPrice,
+                                  productID: currentProduct.productID,
+                                  productSellerID:
+                                      currentProduct.productSellerID,
+                                  inStock: currentProduct.inStock,
+                                  uploadedAt: currentProduct.time,
+                                  discountPercentage:
+                                      currentProduct.discountPercentage,
+                                );
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: ProductScreen(productModel: product),
+                                    type: PageTransitionType.rightToLeft,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                width: width * 0.4,
+                                height: height * 0.17,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: width * 0.02,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: greyShade3,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Image(
+                                  image: NetworkImage(
+                                      currentProduct.imagesURL![0]),
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              );
+            }
+          }
+          if (snapshot.hasError) {
+            return Container(
+              height: height * 0.15,
+              width: width,
+              alignment: Alignment.center,
+              child: Text(
+                'Opps!! There was an error',
+                style: textTheme.displayMedium,
               ),
-            ],
-          ),
-          CommonFunction.blankSpace(height * 0.01, 0),
-          SizedBox(
-            height: height * 0.2,
-            child: ListView.builder(
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                physics: const PageScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: width * 0.4,
-                    height: height * 0.17,
-                    margin: EdgeInsets.symmetric(
-                      horizontal: width * 0.02,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: greyShade3,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  );
-                }),
-          )
-        ],
-      ),
-    );
+            );
+          } else {
+            return Container(
+              height: height * 0.15,
+              width: width,
+              alignment: Alignment.center,
+              child: Text(
+                'Opps!! No Orders Found!!!',
+                style: textTheme.displayMedium,
+              ),
+            );
+          }
+        });
+    // Padding(
+    //   padding: EdgeInsets.symmetric(
+    //       horizontal: width * 0.04, vertical: height * 0.01),
+    //   child: Column(
+    //     children: [
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         children: [
+    //           Text(
+    //             'You Orders ',
+    //             style:
+    //                 textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+    //           ),
+    //           TextButton(
+    //             onPressed: () {},
+    //             child: Text(
+    //               'See all',
+    //               style: textTheme.bodySmall!.copyWith(
+    //                 color: blue,
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       CommonFunction.blankSpace(height * 0.01, 0),
+    //       SizedBox(
+    //         height: height * 0.2,
+    //         child: ListView.builder(
+    //             itemCount: 5,
+    //             shrinkWrap: true,
+    //             scrollDirection: Axis.horizontal,
+    //             physics: const PageScrollPhysics(),
+    //             itemBuilder: (context, index) {
+    //               return Container(
+    //                 width: width * 0.4,
+    //                 height: height * 0.17,
+    //                 margin: EdgeInsets.symmetric(
+    //                   horizontal: width * 0.02,
+    //                 ),
+    //                 decoration: BoxDecoration(
+    //                   border: Border.all(
+    //                     color: greyShade3,
+    //                   ),
+    //                   borderRadius: BorderRadius.circular(10),
+    //                 ),
+    //               );
+    //             }),
+    //       )
+    //     ],
+    //   ),
+    // );
   }
 }
 
@@ -411,38 +544,50 @@ class YouGridBtons extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: grey),
-            borderRadius: BorderRadius.circular(50),
-            color: greyShade2,
+        return InkWell(
+          onTap: () {
+            if (index == 0){
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: const OrdersScreen(),
+                  type: PageTransitionType.rightToLeft,
+                ),
+              );
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: grey),
+              borderRadius: BorderRadius.circular(50),
+              color: greyShade2,
+            ),
+            alignment: Alignment.center,
+            child: Builder(builder: (context) {
+              if (index == 0) {
+                return Text(
+                  'Your Orders',
+                  style: textTheme.bodyMedium,
+                );
+              }
+              if (index == 1) {
+                return Text(
+                  'Buy Again',
+                  style: textTheme.bodyMedium,
+                );
+              }
+              if (index == 2) {
+                return Text(
+                  'Your Account',
+                  style: textTheme.bodyMedium,
+                );
+              }
+              return Text(
+                'Your Wish List',
+                style: textTheme.bodyMedium,
+              );
+            }),
           ),
-          alignment: Alignment.center,
-          child: Builder(builder: (context) {
-            if (index == 0) {
-              return Text(
-                'Your Orders',
-                style: textTheme.bodyMedium,
-              );
-            }
-            if (index == 1) {
-              return Text(
-                'Buy Again',
-                style: textTheme.bodyMedium,
-              );
-            }
-            if (index == 2) {
-              return Text(
-                'Your Account',
-                style: textTheme.bodyMedium,
-              );
-            }
-            return Text(
-              'Your Wish List',
-              
-              style: textTheme.bodyMedium,
-            );
-          }),
         );
       },
     );
@@ -463,10 +608,11 @@ class UserGreetingsYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // AddressModel selectedAddress = addresPovider.currentSelectedAddress;
+    // AddressModel selectedAddress = addresPovider.currentSelectedAddress;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-      child: Consumer<AddressProvider>(builder: (context, addresPovider, child){
+      child:
+          Consumer<AddressProvider>(builder: (context, addresPovider, child) {
         if (addresPovider.fetchedCurrentSelectedAddress == true) {
           AddressModel selectedAddress = addresPovider.currentSelectedAddress;
           return Row(
@@ -514,7 +660,6 @@ class UserGreetingsYouScreen extends StatelessWidget {
           );
         }
       }),
-      
     );
   }
 }
