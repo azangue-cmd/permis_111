@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserProductModel {
+  final String? id;
   final List<String>? imagesURL;
   final String? name;
   final String? category;
@@ -18,7 +21,11 @@ class UserProductModel {
   final int? discountPercentage;
   final int? productCount;
   final DateTime? time;
+
+  String? reference;
+
   UserProductModel({
+    this.id,
     this.imagesURL,
     this.name,
     this.category,
@@ -35,6 +42,8 @@ class UserProductModel {
     this.discountPercentage,
     this.productCount,
     this.time,
+
+    this.reference,
   });
 
   Map<String, dynamic> toMap() {
@@ -55,7 +64,50 @@ class UserProductModel {
       'discountPercentage': discountPercentage,
       'productCount': productCount,
       'time': time?.millisecondsSinceEpoch,
+      'reference': reference,
     };
+  }
+
+  factory UserProductModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options){
+    var map = snapshot.data();
+     return UserProductModel(
+      id: snapshot.id,
+      imagesURL: map?['imagesURL'] != null
+          ? List<String>.from((map?['imagesURL'] as List<dynamic>)).toList()
+          : null,
+      name: map?['name'] != null ? map!['name'] as String : null,
+      category: map?['category'] != null ? map!['category'] as String : null,
+      description:
+          map?['description'] != null ? map!['description'] as String : null,
+      brandName: map?['brandName'] != null ? map!['brandName'] as String : null,
+      manufacturerName: map?['manufacturerName'] != null
+          ? map!['manufacturerName'] as String
+          : null,
+      countryOfOrigin: map?['countryOfOrigin'] != null
+          ? map!['countryOfOrigin'] as String
+          : null,
+      specifications: map?['specifications'] != null
+          ? map!['specifications'] as String
+          : null,
+      price: map?['price'] != null ? map!['price'] as double : null,
+      discountedPrice: map?['discountedPrice'] != null
+          ? map!['discountedPrice'] as double
+          : null,
+      productID: map?['productID'] != null ? map!['productID'] as String : null,
+      productSellerID: map?['productSellerID'] != null
+          ? map!['productSellerID'] as String
+          : null,
+      inStock: map?['inStock'] != null ? map!['inStock'] as bool : null,
+      discountPercentage: map?['discountPercentage'] != null
+          ? map!['discountPercentage'] as int
+          : null,
+      productCount:
+          map?['productCount'] != null ? map!['productCount'] as int : null,
+      time: map?['time'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map!['time'] as int)
+          : null,
+      reference: map?['reference'],
+    );
   }
 
   factory UserProductModel.fromMap(Map<String, dynamic> map) {

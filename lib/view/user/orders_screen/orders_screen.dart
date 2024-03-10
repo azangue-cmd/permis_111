@@ -70,7 +70,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ),
         ),
         body: StreamBuilder<List<UserProductModel>>(
-          stream: UsersProductService.fetchOrders(),
+          stream: UsersProductService.fetchOrdersAsStream(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.isEmpty) {

@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
 import 'package:permis_111/controller/services/auth_services/function.dart';
+import 'package:permis_111/controller/services/notch_pay_services/notch_pay_service.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/product_model.dart';
 import 'package:permis_111/model/user_product_model.dart';
@@ -155,74 +156,85 @@ class KeepShopping extends StatelessWidget {
           StreamBuilder(
               stream: UsersProductService.fetchKeepShoppingForProducts(),
               builder: (context, snapshot) {
-                if (snapshot.data!.isEmpty) {
-                  return Container(
-                    height: height * 0.15,
-                    width: width,
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Start Browsing for Products',
-                      style: textTheme.bodyMedium,
-                    ),
-                  );
-                }
+                // if (snapshot.data!.isEmpty) {
+                //   return Container(
+                //     height: height * 0.15,
+                //     width: width,
+                //     alignment: Alignment.center,
+                //     child: Text(
+                //       'Start Browsing for Products',
+                //       style: textTheme.bodyMedium,
+                //     ),
+                //   );
+                // }
 
                 if (snapshot.hasData) {
                   List<ProductModel> products = snapshot.data!;
-                  return GridView.builder(
-                    itemCount: (products.length > 6) ? 6 : products.length,
-                    shrinkWrap: true,
-                    physics: const PageScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 0.8,
-                    ),
-                    itemBuilder: (context, index) {
-                      ProductModel currentProduct = products[index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              child:
-                                  ProductScreen(productModel: currentProduct),
-                              type: PageTransitionType.rightToLeft,
-                            ),
-                          );
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: greyShade3,
+                  return products.isEmpty
+                      ? Container(
+                          height: height * 0.15,
+                          width: width,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Start Browsing for Products',
+                            style: textTheme.bodyMedium,
+                          ),
+                        )
+                      : GridView.builder(
+                          itemCount:
+                              (products.length > 6) ? 6 : products.length,
+                          shrinkWrap: true,
+                          physics: const PageScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 0.8,
+                          ),
+                          itemBuilder: (context, index) {
+                            ProductModel currentProduct = products[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: ProductScreen(
+                                        productModel: currentProduct),
+                                    type: PageTransitionType.rightToLeft,
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Image(
-                                  image: NetworkImage(
-                                    currentProduct.imagesURL![0],
+                                );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: greyShade3,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Image(
+                                        image: NetworkImage(
+                                          currentProduct.imagesURL![0],
+                                        ),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
                                   ),
-                                  fit: BoxFit.contain,
-                                ),
+                                  CommonFunction.blankSpace(height * 0.005, 0),
+                                  Text(
+                                    currentProduct.name!,
+                                    maxLines: 2,
+                                    style: textTheme.labelLarge!,
+                                  ),
+                                ],
                               ),
-                            ),
-                            CommonFunction.blankSpace(height * 0.005, 0),
-                            Text(
-                              currentProduct.name!,
-                              maxLines: 2,
-                              style: textTheme.labelLarge!,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                            );
+                          },
+                        );
                 }
 
                 if (snapshot.hasError) {
@@ -333,10 +345,29 @@ class UsersOrders extends StatelessWidget {
   final double height;
   final TextTheme textTheme;
 
+  Future<List<UserProductModel>> fetchOrders() async {
+    final np = NotchPayService();
+    final transactions = await np.getTransactions();
+    final allApiT = await np.getApiTransactions();
+    final apiTransaction = allApiT
+        .where((apiTransact) => transactions
+            .any((transact) => apiTransact.reference == transact.reference))
+        .toList();
+
+    var p = apiTransaction;
+
+    var orders = (await UsersProductService.fetchOrders())
+        .where((order) => apiTransaction
+            .any((transact) => order.reference == transact.reference))
+        .toList();
+
+    return orders;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<UserProductModel>>(
-        stream: UsersProductService.fetchOrders(),
+    return FutureBuilder<List<UserProductModel>>(
+        future: fetchOrders(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.isEmpty) {
@@ -546,7 +577,7 @@ class YouGridBtons extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            if (index == 0){
+            if (index == 0) {
               Navigator.push(
                 context,
                 PageTransition(

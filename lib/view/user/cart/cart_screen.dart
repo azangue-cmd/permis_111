@@ -1,12 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/constants/constant_permis.dart';
 import 'package:permis_111/controller/services/product_services/product_services.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/user_product_model.dart';
 import 'package:permis_111/utils/colors.dart';
+import 'package:permis_111/view/user/paiement/paiement.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../pages/widgets/home_widget/homePageAppBar.dart';
@@ -20,6 +22,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final razorpay = Razorpay();
+  final subtotalController = TextEditingController();
 
   @override
   void initState() {
@@ -122,16 +125,18 @@ class _CartScreenState extends State<CartScreen> {
               StreamBuilder(
                   stream: UsersProductService.fetchCartProducts(),
                   builder: (context, snapshot) {
-                    if (snapshot.data!.isEmpty) {
-                      return Center(
+                    
+                    if (snapshot.hasData) {
+                      List<UserProductModel> cartProducts = snapshot.data!;
+                      if (cartProducts.isEmpty){
+                        return Center(
                         child: Text(
                           'No Product Addet to Cart',
                           style: textTheme.bodyMedium,
                         ),
                       );
-                    }
-                    if (snapshot.hasData) {
-                      List<UserProductModel> cartProducts = snapshot.data!;
+                      }
+                      String cartTotalProduct = cartProducts.fold(0.0, (previousValue, produc) => previousValue + (produc.discountedPrice! * produc.productCount!)).toStringAsFixed(0);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -143,7 +148,7 @@ class _CartScreenState extends State<CartScreen> {
                                     style: textTheme.bodyLarge),
                                 TextSpan(
                                   text:
-                                      '${cartProducts.fold(0.0, (previousValue, produc) => previousValue + (produc.discountedPrice! * produc.productCount!)).toStringAsFixed(0)} frcs',
+                                      '$cartTotalProduct frcs',
                                   style: textTheme.displaySmall!.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -189,16 +194,26 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: executPayement,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: amber,
-                                minimumSize: Size(width, height * 0.06),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: PaymentScreen(cartTotalProduct: cartTotalProduct, prodoctsModelLists: cartProducts,),
+                                    type: PageTransitionType.rightToLeft,
+                                  )
+                                  );
+                            },
+                            //onPressed: executPayement,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: amber,
+                              minimumSize: Size(width, height * 0.06),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Text('Proceed to Buy',
-                                  style: textTheme.bodyMedium)),
+                            ),
+                            child: Text('Proceed to Buy',
+                                style: textTheme.bodyMedium),
+                          ),
                           CommonFunction.blankSpace(height * 0.01, 0),
                           CommonFunction.divider(),
                           CommonFunction.blankSpace(height * 0.01, 0),
