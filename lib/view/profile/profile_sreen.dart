@@ -6,6 +6,7 @@ import 'package:permis_111/controller/services/auth_services/function.dart';
 import 'package:permis_111/controller/services/notch_pay_services/notch_pay_service.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/product_model.dart';
+import 'package:permis_111/model/transaction_model.dart';
 import 'package:permis_111/model/user_product_model.dart';
 import 'package:permis_111/utils/colors.dart';
 import 'package:permis_111/view/profile/navbar.dart';
@@ -334,7 +335,7 @@ class BuyAgain extends StatelessWidget {
 }
 
 class UsersOrders extends StatelessWidget {
-  const UsersOrders({
+  UsersOrders({
     super.key,
     required this.width,
     required this.height,
@@ -354,14 +355,30 @@ class UsersOrders extends StatelessWidget {
             .any((transact) => apiTransact.reference == transact.reference))
         .toList();
 
-    var p = apiTransaction;
-
     var orders = (await UsersProductService.fetchOrders())
         .where((order) => apiTransaction
             .any((transact) => order.reference == transact.reference))
         .toList();
 
     return orders;
+  }
+
+  Color _getColorStatus(String status) {
+    if (status == "pending") {
+      return Colors.orange;
+    } else if (status == "complete") {
+      return Colors.green;
+    } else if (status == 'nothing') {
+      return Colors.grey;
+    }
+
+    return Colors.red;
+  }
+
+  String _getStatus(String reference, List<TransactionModel> apiTransaction) {
+    final transact = apiTransaction
+        .firstWhere((transact) => transact.reference == reference);
+    return transact.status ?? 'nothing';
   }
 
   @override
@@ -448,24 +465,71 @@ class UsersOrders extends StatelessWidget {
                                   ),
                                 );
                               },
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                width: width * 0.4,
-                                height: height * 0.17,
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: width * 0.02,
-                                ),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: greyShade3,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    width: width * 0.4,
+                                    height: height * 0.17,
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: width * 0.02,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: greyShade3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Image(
+                                      image: NetworkImage(
+                                          currentProduct.imagesURL![0]),
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Image(
-                                  image: NetworkImage(
-                                      currentProduct.imagesURL![0]),
-                                  fit: BoxFit.contain,
-                                ),
+                                  FutureBuilder(
+                                    future: NotchPayService()
+                                        .getApiTransactions(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        var transacts = snapshot.data!;
+                                        if (transacts.isEmpty) {
+                                          return Container(
+                                            color:
+                                                _getColorStatus("nothing"),
+                                            child: const Text(
+                                              "Nothing",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          );
+                                        } else {
+                                          return Container(
+                                            color: _getColorStatus(
+                                              _getStatus(
+                                                  currentProduct.reference!,
+                                                  transacts),
+                                            ),
+                                            child: Text(
+                                              _getStatus(
+                                                  currentProduct.reference!,
+                                                  transacts),
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                  
+                                      return const SizedBox(
+                                        width: 12,
+                                        height: 12,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.blue,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             );
                           }),
@@ -485,17 +549,24 @@ class UsersOrders extends StatelessWidget {
                 style: textTheme.displayMedium,
               ),
             );
-          } else {
-            return Container(
-              height: height * 0.15,
-              width: width,
-              alignment: Alignment.center,
-              child: Text(
-                'Opps!! No Orders Found!!!',
-                style: textTheme.displayMedium,
-              ),
-            );
           }
+
+          return const SizedBox(
+            width: 12,
+            height: 12,
+            child: CircularProgressIndicator(
+              color: Colors.blue,
+            ),
+          );
+          // Container(
+          //   height: height * 0.15,
+          //   width: width,
+          //   alignment: Alignment.center,
+          //   child: Text(
+          //     'Opps!! No Orders Found!!!',
+          //     style: textTheme.displayMedium,
+          //   ),
+          // );
         });
     // Padding(
     //   padding: EdgeInsets.symmetric(

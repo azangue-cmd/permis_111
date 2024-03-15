@@ -818,9 +818,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             stream: RatingServices.fetchReview(
                                 productID: widget.productModel.productID!),
                             builder: (context, snapshot) {
-                              log('Total Ratings =  ${snapshot.data!.length}');
-                              if (snapshot.hasData &&
-                                  snapshot.data!.isNotEmpty) {
+                              if (snapshot.hasData) {
                                 List<ReviewModel> reviewData = snapshot.data!;
                                 return ListView.builder(
                                     itemCount: reviewData.length,
@@ -905,9 +903,14 @@ class _ProductScreenState extends State<ProductScreen> {
                               }
                               if (snapshot.hasError) {
                                 return const SizedBox();
-                              } else {
-                                return const SizedBox();
                               }
+                              return const SizedBox(
+                                width: 12,
+                                height: 12,
+                                child: CircularProgressIndicator(
+                                  color: Colors.blue,
+                                ),
+                              );
                             })
                       ],
                     );
@@ -1048,87 +1051,87 @@ class _ProductScreenState extends State<ProductScreen> {
                   stream: RatingServices.fetchReview(
                       productID: widget.productModel.productID!),
                   builder: (context, snapshot) {
-                    log('Total Ratings =  ${snapshot.data!.length}');
-                    if (snapshot.data!.isEmpty) {
-                      return Text(
-                        'No Ratings yet',
-                        style: textTheme.labelMedium!.copyWith(color: grey),
-                      );
-                    }
-                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    if (snapshot.hasData) {
                       List<ReviewModel> reviewData = snapshot.data!;
-                      return ListView.builder(
-                          itemCount: reviewData.length,
-                          shrinkWrap: true,
-                          physics: const PageScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            ReviewModel currentReview = reviewData[index];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (currentReview.imagesURL!.isNotEmpty)
-                                  GridView.builder(
-                                      physics: const PageScrollPhysics(),
-                                      itemCount:
-                                          currentReview.imagesURL!.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 5,
-                                              mainAxisExtent: 10,
-                                              crossAxisSpacing: 10),
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return Image(
-                                          image: NetworkImage(
-                                            currentReview.imagesURL![index],
-                                          ),
-                                        );
-                                      }),
-                                CommonFunction.blankSpace(
-                                  height * 0.005,
-                                  0,
-                                ),
-                                RatingBar(
-                                  initialRating: currentReview.rating,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemSize: width * 0.04,
-                                  ignoreGestures: true,
-                                  ratingWidget: RatingWidget(
-                                    full: Icon(
-                                      Icons.star,
-                                      color: amber,
+                      log('Total Ratings =  ${reviewData!.length}');
+                      return reviewData.isEmpty
+                          ? Text(
+                              'No Ratings yet',
+                              style:
+                                  textTheme.labelMedium!.copyWith(color: grey),
+                            )
+                          : ListView.builder(
+                              itemCount: reviewData.length,
+                              shrinkWrap: true,
+                              physics: const PageScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                ReviewModel currentReview = reviewData[index];
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (currentReview.imagesURL!.isNotEmpty)
+                                      GridView.builder(
+                                          physics: const PageScrollPhysics(),
+                                          itemCount:
+                                              currentReview.imagesURL!.length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 5,
+                                                  mainAxisExtent: 10,
+                                                  crossAxisSpacing: 10),
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            return Image(
+                                              image: NetworkImage(
+                                                currentReview.imagesURL![index],
+                                              ),
+                                            );
+                                          }),
+                                    CommonFunction.blankSpace(
+                                      height * 0.005,
+                                      0,
                                     ),
-                                    half: Icon(
-                                      Icons.star_half,
-                                      color: amber,
+                                    RatingBar(
+                                      initialRating: currentReview.rating,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemSize: width * 0.04,
+                                      ignoreGestures: true,
+                                      ratingWidget: RatingWidget(
+                                        full: Icon(
+                                          Icons.star,
+                                          color: amber,
+                                        ),
+                                        half: Icon(
+                                          Icons.star_half,
+                                          color: amber,
+                                        ),
+                                        empty: Icon(
+                                          Icons.star_outline_sharp,
+                                          color: amber,
+                                        ),
+                                      ),
+                                      itemPadding: EdgeInsets.zero,
+                                      onRatingUpdate: (rating) {
+                                        usersRating = rating;
+                                      },
                                     ),
-                                    empty: Icon(
-                                      Icons.star_outline_sharp,
-                                      color: amber,
+                                    CommonFunction.blankSpace(
+                                      height * 0.005,
+                                      0,
                                     ),
-                                  ),
-                                  itemPadding: EdgeInsets.zero,
-                                  onRatingUpdate: (rating) {
-                                    usersRating = rating;
-                                  },
-                                ),
-                                CommonFunction.blankSpace(
-                                  height * 0.005,
-                                  0,
-                                ),
-                                Text(
-                                  currentReview.review!,
-                                  style: textTheme.labelMedium,
-                                ),
-                                CommonFunction.blankSpace(
-                                  height * 0.02,
-                                  0,
-                                ),
-                              ],
-                            );
-                          });
+                                    Text(
+                                      currentReview.review!,
+                                      style: textTheme.labelMedium,
+                                    ),
+                                    CommonFunction.blankSpace(
+                                      height * 0.02,
+                                      0,
+                                    ),
+                                  ],
+                                );
+                              });
                     }
                     if (snapshot.hasError) {
                       return const SizedBox();

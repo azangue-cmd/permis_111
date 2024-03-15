@@ -123,7 +123,7 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
         }
       }
     }
-    log(DateTime.now().month.toString() as num);
+    log(DateTime.now().month);
   }
 
   @override

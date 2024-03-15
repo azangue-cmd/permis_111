@@ -32,7 +32,7 @@ class TransactionModel {
 
   factory TransactionModel.fromMap(Map<String, dynamic> data) {
     return TransactionModel(
-      reference: data['reference'],
+      reference: data['merchant_reference'],
       authorizationUrl: data['authorization_url'],
       status: data['status'],
       sndStatus: data['transaction']?['status'],
