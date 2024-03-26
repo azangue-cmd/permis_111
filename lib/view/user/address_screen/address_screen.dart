@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:permis_111/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:permis_111/model/address_model.dart';
 import 'package:uuid/uuid.dart';
@@ -17,14 +18,11 @@ class AdressScreen extends StatefulWidget {
 
 class _AdressScreenState extends State<AdressScreen> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController houseController = TextEditingController();
-  TextEditingController areaController = TextEditingController();
-  TextEditingController landmarkController = TextEditingController();
-  TextEditingController pincodeController = TextEditingController();
-  TextEditingController towmController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-
+  String mobileController = " ";
+  TextEditingController landController = TextEditingController();
+  TextEditingController townController = TextEditingController();
+  TextEditingController quaterController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -60,76 +58,88 @@ class _AdressScreenState extends State<AdressScreen> {
         body: Container(
           width: width,
           padding: EdgeInsets.symmetric(
-            horizontal: width * 0.03,
-            vertical: height * 0.02,
+            horizontal: width * 0.04,
+            vertical: height * 0.04,
           ),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                AddressScreenTextField(
-                  textController: nameController,
-                  title: "Enter your name",
-                  hintText: "Enter your name",
+                TextFormField(
+                  controller: nameController,
+                  cursorWidth: width * 0.005,
+                  decoration:  InputDecoration(
+                    labelText: "Votre nom",
+                    hintText: "Votre nom",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25)
+                    )
+                  ),
+                  
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: mobileController,
-                  title: "Enter your mobile number",
-                  hintText: "Enter your mobile number",
+                IntlPhoneField(
+                  cursorWidth: width * 0.005,
+                  initialCountryCode: "CM",
+                    onChanged: (value) {
+                      print(value.completeNumber);
+                      mobileController = value.completeNumber;
+                    },
+                  decoration: InputDecoration(
+                    labelText: "Numero de telephone",
+                    hintText: "Numero de telephone",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25)
+                    )
+                  ),
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: houseController,
-                  title: "Enter your House No / quartier.",
-                  hintText: "Enter your House No / quartier.",
+                TextFormField(
+                  controller: landController,
+                  cursorWidth: width * 0.005,
+                  decoration: InputDecoration(
+                    labelText: "Votre pays",
+                    hintText: "pays",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25)
+                    )
+                  ),
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: areaController,
-                  title: "Enter your Area/voter region",
-                  hintText: "Area/voter region",
+                TextFormField(
+                  controller: townController,
+                  cursorWidth: width * 0.005,
+                  decoration: InputDecoration(
+                    labelText: "Ville",
+                    hintText: "Ville",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25)
+                    )
+                  ),
                 ),
                 CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: landmarkController,
-                  title: "Enter your LandMark",
-                  hintText: "Landmark",
+                TextFormField(
+                  controller: quaterController,
+                  cursorWidth: width * 0.005,
+                  decoration: InputDecoration(
+                    labelText: "Quatier",
+                    hintText: "Quatier",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25)
+                    )
+                  ),
                 ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: pincodeController,
-                  title: "Enter your PINCODE",
-                  hintText: "pincode",
-                ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: towmController,
-                  title: "Enter your Town",
-                  hintText: "Towm",
-                ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                AddressScreenTextField(
-                  textController: stateController,
-                  title: "Enter your Town",
-                  hintText: "State",
-                ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                
-                CommonFunction.blankSpace(height * 0.04, 0),
+                CommonFunction.blankSpace(height * 0.08, 0),
                 ElevatedButton(
                   onPressed: () {
                     Uuid uuid = const Uuid();
                     String docID = uuid.v1();
                     AddressModel addressModel = AddressModel(
                       name: nameController.text.trim(),
-                      mobileNumber: mobileController.text.trim(),
+                      mobileNumber: mobileController.trim(),
                       authenticatedMobileNumber: auth.currentUser!.phoneNumber,
-                      houseNumber: houseController.text.trim(),
-                      area: areaController.text.trim(),
-                      landMark: landmarkController.text.trim(),
-                      pincode: pincodeController.text.trim(),
-                      town: towmController.text.trim(),
-                      state: stateController.text.trim(),
+                      houseNumber: landController.text.trim(),
+                      area: townController.text.trim(),
+                      landMark: quaterController.text.trim(),
                       docID: docID,
                       isDefault: true,
                     );

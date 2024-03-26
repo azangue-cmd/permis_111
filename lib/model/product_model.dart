@@ -7,9 +7,6 @@ class ProductModel {
   final String? category;
   final String? description;
   final String? brandName;
-  final String? manufacturerName;
-  final String? countryOfOrigin;
-  final String? specifications;
   final double? price;
   final double? discountedPrice;
   final String? productID;
@@ -23,9 +20,6 @@ class ProductModel {
     this.category,
     this.description,
     this.brandName,
-    this.manufacturerName,
-    this.countryOfOrigin,
-    this.specifications,
     this.price,
     this.discountedPrice,
     this.productID,
@@ -41,10 +35,6 @@ class ProductModel {
       'name': name,
       'category': category,
       'description': description,
-      'brandName': brandName,
-      'manufacturerName': manufacturerName,
-      'countryOfOrigin': countryOfOrigin,
-      'specifications': specifications,
       'price': price,
       'discountedPrice': discountedPrice,
       'productID': productID,
@@ -64,16 +54,7 @@ class ProductModel {
       category: map['category'] != null ? map['category'] as String : null,
       description:
           map['description'] != null ? map['description'] as String : null,
-      brandName: map['brandName'] != null ? map['brandName'] as String : null,
-      manufacturerName: map['manufacturerName'] != null
-          ? map['manufacturerName'] as String
-          : null,
-      countryOfOrigin: map['countryOfOrigin'] != null 
-          ? map['countryOfOrigin'] as String
-          : null,
-      specifications: map['specifications'] != null
-          ? map['specifications'] as String
-          : null,
+       brandName: map['brandName'] != null ? map['brandName'] as String : null,
       price: map['price'] != null ? map['price'] as double : null,
       discountedPrice: map['discountedPrice'] != null
           ? map['discountedPrice'] as double

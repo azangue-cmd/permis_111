@@ -1,6 +1,3 @@
-
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +23,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
   TextEditingController brandNameController = TextEditingController();
-  TextEditingController manufacturerNameController = TextEditingController();
   TextEditingController countryOfOriginController = TextEditingController();
   TextEditingController productSpecificationsController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
@@ -67,10 +63,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         name: productNameController.text.trim(),
         category: dropDownValue,
         description: productDescriptionController.text.trim(),
-        brandName: brandNameController.text.trim(),
-        manufacturerName: manufacturerNameController.text.trim(),
-        countryOfOrigin: countryOfOriginController.text.trim(),
-        specifications: productSpecificationsController.text.trim(),
+        
         price: double.parse(productPriceController.text.trim()),
         discountedPrice:
             double.parse(discountedProductPriceController.text.trim()),
@@ -158,11 +151,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           textController: productDescriptionController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
-        AddProductCommonTextField(
-          title: 'Fabricant',
-          hintText: 'nom',
-          textController: manufacturerNameController,
-        ),
+     
         CommonFunction.blankSpace(height * 0.015, 0),
         AddProductCommonTextField(
           title: 'Marque',
@@ -170,18 +159,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           textController: brandNameController,
         ),
         CommonFunction.blankSpace(height * 0.015, 0),
-        AddProductCommonTextField(
-          title: 'Pays d’origine',
-          hintText: 'pays',
-          textController: countryOfOriginController,
-        ),
-        CommonFunction.blankSpace(height * 0.015, 0),
-        AddProductCommonTextField(
-          title: 'Specification du produit',
-          hintText: 'specification',
-          textController: productSpecificationsController,
-        ),
-        CommonFunction.blankSpace(height * 0.015, 0),
+        
         AddProductCommonTextField(
           title: 'Prix du produit',
           hintText: 'prix',

@@ -58,12 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: height * 0.02,
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: () async {
-                      await disconnect();
-                    },
-                    icon: const Icon(Icons.power),
-                  ),
+                  
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -79,6 +74,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: Colors.black,
                       size: height * 0.035,
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      await disconnect();
+                    },
+                    icon: const Icon(Icons.logout),
                   ),
                 ],
               ),
@@ -96,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 UserGreetingsYouScreen(
                     width: width, textTheme: textTheme, height: height),
                 // CommonFunction.blankSpace(height * 0.01, 0),
-                YouGridBtons(width: width, textTheme: textTheme),
+               // YouGridBtons(width: width, textTheme: textTheme),
                 CommonFunction.blankSpace(height * 0.02, 0),
                 UsersOrders(width: width, height: height, textTheme: textTheme),
                 CommonFunction.blankSpace(height * 0.01, 0),
@@ -138,14 +139,14 @@ class KeepShopping extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Keep Shooping for ',
+                'shooping',
                 style:
-                    textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                    textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Browsing History',
+                  'Historique',
                   style: textTheme.bodySmall!.copyWith(
                     color: blue,
                   ),
@@ -157,17 +158,6 @@ class KeepShopping extends StatelessWidget {
           StreamBuilder(
               stream: UsersProductService.fetchKeepShoppingForProducts(),
               builder: (context, snapshot) {
-                // if (snapshot.data!.isEmpty) {
-                //   return Container(
-                //     height: height * 0.15,
-                //     width: width,
-                //     alignment: Alignment.center,
-                //     child: Text(
-                //       'Start Browsing for Products',
-                //       style: textTheme.bodyMedium,
-                //     ),
-                //   );
-                // }
 
                 if (snapshot.hasData) {
                   List<ProductModel> products = snapshot.data!;
@@ -177,8 +167,8 @@ class KeepShopping extends StatelessWidget {
                           width: width,
                           alignment: Alignment.center,
                           child: Text(
-                            'Start Browsing for Products',
-                            style: textTheme.bodyMedium,
+                            'rechercher des produits',
+                            style: textTheme.bodySmall,
                           ),
                         )
                       : GridView.builder(
@@ -244,8 +234,8 @@ class KeepShopping extends StatelessWidget {
                     width: width,
                     alignment: Alignment.center,
                     child: Text(
-                      'There was an error!!!',
-                      style: textTheme.bodyMedium,
+                      'Une erreur s’est produite !!',
+                      style: textTheme.bodySmall,
                     ),
                   );
                 } else {
@@ -254,8 +244,8 @@ class KeepShopping extends StatelessWidget {
                     width: width,
                     alignment: Alignment.center,
                     child: Text(
-                      'No Product Found!!!',
-                      style: textTheme.bodyMedium,
+                      'Aucun produit trouvé !!',
+                      style: textTheme.bodySmall,
                     ),
                   );
                 }
@@ -289,14 +279,14 @@ class BuyAgain extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Buy Again ',
+                'Vos commandes',
                 style:
-                    textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                    textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {},
                 child: Text(
-                  'See all',
+                  'Voir tout',
                   style: textTheme.bodySmall!.copyWith(
                     color: blue,
                   ),
@@ -393,8 +383,8 @@ class UsersOrders extends StatelessWidget {
                 width: width,
                 alignment: Alignment.center,
                 child: Text(
-                  'Opps!! Your didnt oder anything yet!!!',
-                  style: textTheme.displayMedium,
+                  'Opps!! Vous n’avez encore rien commandé!!',
+                  style: textTheme.displaySmall,
                 ),
               );
             } else {
@@ -408,14 +398,14 @@ class UsersOrders extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'You Orders ',
-                          style: textTheme.bodyLarge!
+                          'Vos achats ',
+                          style: textTheme.bodySmall!
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         TextButton(
                           onPressed: () {},
                           child: Text(
-                            'See all',
+                            'Voir tout',
                             style: textTheme.bodySmall!.copyWith(
                               color: blue,
                             ),
@@ -440,12 +430,7 @@ class UsersOrders extends StatelessWidget {
                                   name: currentProduct.name,
                                   category: currentProduct.category,
                                   description: currentProduct.description,
-                                  brandName: currentProduct.brandName,
-                                  manufacturerName:
-                                      currentProduct.manufacturerName,
-                                  countryOfOrigin:
-                                      currentProduct.countryOfOrigin,
-                                  specifications: currentProduct.specifications,
+                                   brandName: currentProduct.brandName,
                                   price: currentProduct.price,
                                   discountedPrice:
                                       currentProduct.discountedPrice,
@@ -469,7 +454,7 @@ class UsersOrders extends StatelessWidget {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.all(5),
-                                    width: width * 0.4,
+                                    width: width * 0.3,
                                     height: height * 0.17,
                                     margin: EdgeInsets.symmetric(
                                       horizontal: width * 0.02,
@@ -483,7 +468,7 @@ class UsersOrders extends StatelessWidget {
                                     child: Image(
                                       image: NetworkImage(
                                           currentProduct.imagesURL![0]),
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                   FutureBuilder(
@@ -494,27 +479,39 @@ class UsersOrders extends StatelessWidget {
                                         var transacts = snapshot.data!;
                                         if (transacts.isEmpty) {
                                           return Container(
-                                            color:
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                                  color:
                                                 _getColorStatus("nothing"),
+                                                ),
                                             child: const Text(
                                               "Nothing",
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white,
+                                                  fontSize: 9.5
+                                                  ),
                                             ),
                                           );
                                         } else {
                                           return Container(
-                                            color: _getColorStatus(
-                                              _getStatus(
-                                                  currentProduct.reference!,
-                                                  transacts),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              color: _getColorStatus(
+                                                  _getStatus(
+                                                      currentProduct.reference!,
+                                                      transacts)),
                                             ),
+                                            
                                             child: Text(
                                               _getStatus(
                                                   currentProduct.reference!,
                                                   transacts),
                                               style: const TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white,
+                                                  fontSize: 9.5
+                                                  ),
                                             ),
                                           );
                                         }
@@ -545,7 +542,7 @@ class UsersOrders extends StatelessWidget {
               width: width,
               alignment: Alignment.center,
               child: Text(
-                'Opps!! There was an error',
+                'Opps!! Une erreur s’est produite',
                 style: textTheme.displayMedium,
               ),
             );
@@ -558,67 +555,7 @@ class UsersOrders extends StatelessWidget {
               color: Colors.blue,
             ),
           );
-          // Container(
-          //   height: height * 0.15,
-          //   width: width,
-          //   alignment: Alignment.center,
-          //   child: Text(
-          //     'Opps!! No Orders Found!!!',
-          //     style: textTheme.displayMedium,
-          //   ),
-          // );
         });
-    // Padding(
-    //   padding: EdgeInsets.symmetric(
-    //       horizontal: width * 0.04, vertical: height * 0.01),
-    //   child: Column(
-    //     children: [
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Text(
-    //             'You Orders ',
-    //             style:
-    //                 textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-    //           ),
-    //           TextButton(
-    //             onPressed: () {},
-    //             child: Text(
-    //               'See all',
-    //               style: textTheme.bodySmall!.copyWith(
-    //                 color: blue,
-    //               ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       CommonFunction.blankSpace(height * 0.01, 0),
-    //       SizedBox(
-    //         height: height * 0.2,
-    //         child: ListView.builder(
-    //             itemCount: 5,
-    //             shrinkWrap: true,
-    //             scrollDirection: Axis.horizontal,
-    //             physics: const PageScrollPhysics(),
-    //             itemBuilder: (context, index) {
-    //               return Container(
-    //                 width: width * 0.4,
-    //                 height: height * 0.17,
-    //                 margin: EdgeInsets.symmetric(
-    //                   horizontal: width * 0.02,
-    //                 ),
-    //                 decoration: BoxDecoration(
-    //                   border: Border.all(
-    //                     color: greyShade3,
-    //                   ),
-    //                   borderRadius: BorderRadius.circular(10),
-    //                 ),
-    //               );
-    //             }),
-    //       )
-    //     ],
-    //   ),
-    // );
   }
 }
 
@@ -668,24 +605,24 @@ class YouGridBtons extends StatelessWidget {
             child: Builder(builder: (context) {
               if (index == 0) {
                 return Text(
-                  'Your Orders',
+                  'Vos commandes',
                   style: textTheme.bodyMedium,
                 );
               }
               if (index == 1) {
                 return Text(
-                  'Buy Again',
+                  'Acheter à nouveau',
                   style: textTheme.bodyMedium,
                 );
               }
               if (index == 2) {
                 return Text(
-                  'Your Account',
+                  'Votre compte',
                   style: textTheme.bodyMedium,
                 );
               }
               return Text(
-                'Your Wish List',
+                'Votre liste de souhaits',
                 style: textTheme.bodyMedium,
               );
             }),
@@ -710,7 +647,6 @@ class UserGreetingsYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AddressModel selectedAddress = addresPovider.currentSelectedAddress;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.04),
       child:
@@ -722,7 +658,7 @@ class UserGreetingsYouScreen extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: 'Bonjour, ', style: textTheme.bodyLarge),
+                    TextSpan(text: 'Bonjour, ', style: textTheme.bodySmall,),
                     TextSpan(
                       text: '${selectedAddress.name}',
                       style: textTheme.bodyLarge!
@@ -744,10 +680,10 @@ class UserGreetingsYouScreen extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: 'Bonjour, ', style: textTheme.bodyLarge),
+                    TextSpan(text: 'Bonjour, ', style: textTheme.bodySmall),
                     TextSpan(
                       text: 'Monsieur',
-                      style: textTheme.bodyLarge!
+                      style: textTheme.bodySmall!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],

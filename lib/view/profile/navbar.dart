@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:permis_111/constants/common_function.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -26,21 +27,32 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Your Orders'),
+            title: Text('Votre compte'),
           ),
           ListTile(
             leading: Icon(Icons.card_giftcard),
-            title: Text('Buy Again'),
+            title: Text('Vos Achats'),
           ),
           ListTile(
             leading: Icon(Icons.shopping_cart),
-            title: Text('Your Account'),
+            title: Text('Vos commande'),
           ),
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text('your Wish List'),
           ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Parametres'),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Deconexion',
+            ),
+          ),
+         
         ],
+       
       ),
     );
   }

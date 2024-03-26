@@ -30,30 +30,30 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
   getDay(int dayNum) {
     switch (dayNum % 7) {
       case 0:
-        return 'Monday';
+        return 'Lundi';
       case 1:
-        return 'Tuesday';
+        return 'Mardi';
       case 2:
-        return 'Wednesday';
+        return 'Mercredi';
       case 3:
-        return 'Thursday';
+        return 'Jeudi';
       case 4:
-        return 'Friday';
+        return 'Vendredi';
       case 5:
-        return 'Saturday';
+        return 'Samedi';
       case 6:
-        return 'Sunday';
+        return 'Dimanche';
       default:
-        'Sunday';
+        'Samedi';
     }
   }
 
   getMonth(int deliveryDate) {
     if (DateTime.now().month == 2) {
       if (deliveryDate > 28) {
-        return 'March';
+        return 'Mars';
       } else {
-        return 'Febuary';
+        return 'Fevrier';
       }
     }
     if (DateTime.now().month == 4 ||
@@ -62,83 +62,83 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
         DateTime.now().month == 10 ||
         DateTime.now().month == 12) {
       if ((deliveryDate > 30) && (DateTime.now().month == 12)) {
-        return 'January';
+        return 'Janvier';
       }
       if (deliveryDate > 30) {
         int month = DateTime.now().month + 1;
         switch (month) {
           case 1:
-            return 'January';
+            return 'Janvier';
 
           case 2:
-            return 'February';
+            return 'Fevrier';
 
           case 3:
-            return 'March';
+            return 'Mars';
 
           case 4:
-            return 'April';
+            return 'Avril';
 
           case 5:
             return 'May';
 
           case 6:
-            return 'June';
+            return 'Juin';
 
           case 7:
-            return 'July';
+            return 'Juillet';
 
           case 8:
-            return 'August';
+            return 'Aout';
 
           case 9:
-            return 'September';
+            return 'Septembre';
 
           case 10:
-            return 'October';
+            return 'Octobre';
 
           case 11:
-            return 'November';
+            return 'Novembre';
           case 12:
-            return 'December';
+            return 'Decembre';
         }
       } else {
         int month = DateTime.now().month;
         switch (month) {
           case 1:
-            return 'January';
+            return 'Janvier';
 
           case 2:
-            return 'February';
+            return 'Fevrier';
 
           case 3:
-            return 'March';
+            return 'Mars';
 
           case 4:
-            return 'April';
+            return 'Avril';
 
           case 5:
-            return 'May';
+            return 'Mai';
 
           case 6:
-            return 'June';
+            return 'Juin';
 
           case 7:
-            return 'July';
+            return 'Juillet';
 
           case 8:
-            return 'August';
+            return 'Aout';
 
           case 9:
-            return 'September';
+            return 'Septembre';
 
           case 10:
-            return 'October';
+            return 'Octobre';
 
           case 11:
-            return 'November';
+            return 'Novembre';
           case 12:
-            return 'December';
+            return 'Decembre';
         }
       }
     }
@@ -147,7 +147,6 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<UsersProductProvider>().emptySearchedProductsList();
@@ -176,7 +175,6 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                 ),
               ),
               child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
                     onPressed: () {
@@ -188,11 +186,10 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: width * 0.68,
+                    width: width * 0.66,
                     child: TextField(
                       controller: searchController,
                       onSubmitted: (productName) {
-                        // log(productName);
                         context
                             .read<UsersProductProvider>()
                             .getSearchedProducts(productName: productName);
@@ -204,7 +201,7 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                         filled: true,
                         fillColor: white,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                       ),
                     ),
@@ -213,7 +210,7 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                   IconButton(
                       onPressed: () {},
                       icon: Icon(
-                        Icons.mic,
+                        Icons.camera_alt_outlined,
                         color: black,
                       ))
                 ],
@@ -222,16 +219,11 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
         body: Consumer<UsersProductProvider>(
             builder: (context, usersProductProvider, child) {
           if (usersProductProvider.productsFetched == false) {
-            // return Center(
-            //   child: CircularProgressIndicator(
-            //     color: amber,
-            //   ),
-            // );
             return SizedBox();
           } else {
             if (usersProductProvider.searchedProducts.isEmpty) {
               return const Center(
-                child: Text('Opps! Product not found'),
+                child: Text('Opps ! Produit introuvable'),
               );
             } else {
               return ListView.builder(
@@ -548,7 +540,7 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                                       0,
                                     ),
                                     Text(
-                                      'Save extra with No Cost EMI',
+                                      'Économisez avec EMI sans frais',
                                       style: textTheme.labelMedium!.copyWith(
                                         color: grey,
                                       ),
@@ -562,7 +554,7 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: 'Get it by ',
+                                            text: 'Obtenez-le par ',
                                             style:
                                                 textTheme.labelMedium!.copyWith(
                                               color: grey,
@@ -604,8 +596,8 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                                     ),
                                     Text(
                                       currentProduct.discountedPrice! > 500
-                                          ? 'FREE Delivery by Amazon'
-                                          : 'Extra delivery charges Applied',
+                                          ? 'Livraison gratuite par Permis 111'
+                                          : 'Frais de livraison appliqués',
                                       style: textTheme.labelMedium!.copyWith(
                                         color: grey,
                                       ),
@@ -623,13 +615,7 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                                           category: currentProduct.category,
                                           description:
                                               currentProduct.description,
-                                          brandName: currentProduct.brandName,
-                                          manufacturerName:
-                                              currentProduct.manufacturerName,
-                                          countryOfOrigin:
-                                              currentProduct.countryOfOrigin,
-                                          specifications:
-                                              currentProduct.specifications,
+                                           brandName: currentProduct.brandName,
                                           price: currentProduct.price,
                                           discountedPrice:
                                               currentProduct.discountedPrice,
@@ -661,7 +647,7 @@ class _SearchedProductScreenState extends State<SearchedProductScreen> {
                                         ),
                                       ),
                                       child: Text(
-                                        'Add to Cart',
+                                        'Ajouter au panier',
                                         style: textTheme.bodyMedium,
                                       ),
                                     ),

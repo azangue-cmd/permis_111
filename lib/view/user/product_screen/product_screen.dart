@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:provider/provider.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../constants/constant_permis.dart';
@@ -32,15 +31,13 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   // ! RAZORPAY CODES (Payment Gateway)
-  final razorpay = Razorpay();
+ 
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-      razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-      razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+      
       context.read<RatingProvider>().reset();
       setState(() {
         usersRating = -1;
@@ -59,69 +56,19 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void dispose() {
     super.dispose();
-    razorpay.clear();
+  
   }
   //!
   //! RAZORPAY HANDLE EVENTS
   //!
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    UserProductModel userProductModel = UserProductModel(
-      imagesURL: widget.productModel.imagesURL,
-      name: widget.productModel.name,
-      category: widget.productModel.category,
-      description: widget.productModel.description,
-      brandName: widget.productModel.brandName,
-      manufacturerName: widget.productModel.manufacturerName,
-      countryOfOrigin: widget.productModel.countryOfOrigin,
-      specifications: widget.productModel.specifications,
-      price: widget.productModel.price,
-      discountedPrice: widget.productModel.discountedPrice,
-      productID: widget.productModel.productID,
-      productSellerID: widget.productModel.productSellerID,
-      inStock: widget.productModel.inStock,
-      discountPercentage: widget.productModel.discountPercentage,
-      productCount: 1,
-      time: DateTime.now(),
-    );
-    await ProductServices.addSalesData(
-      context: context,
-      productModel: userProductModel,
-      userID: auth.currentUser!.phoneNumber!,
-    );
-    await UsersProductService.addOrder(
-        context: context, productModel: userProductModel);
-  }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
-    CommonFunction.showErrorToast(
-      context: context,
-      message: 'Opps! Product Purchase Failed',
-    );
-  }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {}
+  
 
-  executePayment() {
-    var options = {
-      'key': keyID,
-      // 'amount': widget.productModel.discountedPrice! * 100,
-      'amount': 1 * 100, // Amount is rs 1,
-      // here amount * 100 because razorpay counts amount in paisa
-      //i.e 100 paisa = 1 Rupee
-      // 'image' : '<YOUR BUISNESS EMAIL>'
-      'name': widget.productModel.name,
-      'description': (widget.productModel.description!.length < 255)
-          ? widget.productModel.description!.length
-          : widget.productModel.description!.substring(0, 250),
-      'prefill': {
-        'contact': auth.currentUser!.phoneNumber, //<USERS CONTACT NO.>
-        'email': 'test@razorpay.com' // <USERS EMAIL NO.>
-      }
-    };
+ 
 
-    razorpay.open(options);
-  }
+
 
 // !
 // !
@@ -416,9 +363,9 @@ class _ProductScreenState extends State<ProductScreen> {
                       category: widget.productModel.category,
                       description: widget.productModel.description,
                       brandName: widget.productModel.brandName,
-                      manufacturerName: widget.productModel.manufacturerName,
-                      countryOfOrigin: widget.productModel.countryOfOrigin,
-                      specifications: widget.productModel.specifications,
+                      // manufacturerName: widget.productModel.manufacturerName,
+                      // countryOfOrigin: widget.productModel.countryOfOrigin,
+                      // specifications: widget.productModel.specifications,
                       price: widget.productModel.price,
                       discountedPrice: widget.productModel.discountedPrice,
                       productID: widget.productModel.productID,
@@ -454,7 +401,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   0,
                 ),
                 ElevatedButton(
-                  onPressed: executePayment,
+                  onPressed: (){},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: orange,
                     minimumSize: Size(
@@ -515,11 +462,11 @@ class _ProductScreenState extends State<ProductScreen> {
                   height * 0.005,
                   0,
                 ),
-                Text(
-                  widget.productModel.specifications!,
-                  style: textTheme.labelMedium!
-                      .copyWith(fontWeight: FontWeight.w400, color: grey),
-                ),
+                // Text(
+                //   widget.productModel.specifications!,
+                //   style: textTheme.labelMedium!
+                //       .copyWith(fontWeight: FontWeight.w400, color: grey),
+                // ),
                 CommonFunction.blankSpace(
                   height * 0.02,
                   0,

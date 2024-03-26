@@ -31,30 +31,30 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
   getDay(int dayNum) {
     switch (dayNum % 7) {
       case 0:
-        return 'Monday';
+        return 'Lundi';
       case 1:
-        return 'Tuesday';
+        return 'Mardi';
       case 2:
-        return 'Wednesday';
+        return 'Mercredi';
       case 3:
-        return 'Thursday';
+        return 'Jeudi';
       case 4:
-        return 'Friday';
+        return 'Vendredi';
       case 5:
-        return 'Saturday';
+        return 'Samedi';
       case 6:
-        return 'Sunday';
+        return 'Dimanche';
       default:
-        'Sunday';
+        'Samedi';
     }
   }
 
   getMouth(int deliveryDate) {
     if (DateTime.now().month == 2) {
       if (deliveryDate > 28) {
-        return 'March';
+        return 'Mars';
       } else {
-        return 'February';
+        return 'Fevrier';
       }
     }
     if (DateTime.now().month == 4 ||
@@ -63,63 +63,63 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
         DateTime.now().month == 10 ||
         DateTime.now().month == 12) {
       if ((deliveryDate > 30) && (DateTime.now().month == 12)) {
-        return 'January';
+        return 'Janvier';
       }
       if (deliveryDate > 30) {
         int month = DateTime.now().month + 1;
         switch (month) {
           case 1:
-            return 'Junuary';
+            return 'Janvier';
           case 2:
-            return 'February';
+            return 'Fevrier';
           case 3:
-            return 'March';
+            return 'Mars';
           case 4:
-            return 'April';
+            return 'Avril';
           case 5:
-            return 'May';
+            return 'Mai';
           case 6:
-            return 'june';
+            return 'Juin';
           case 7:
-            return 'July';
+            return 'Juillet';
           case 8:
-            return 'August';
+            return 'Aout';
           case 9:
-            return 'September';
+            return 'Septembre';
           case 10:
-            return 'October';
+            return 'Octobre';
           case 11:
-            return 'November';
+            return 'Novembre';
           case 12:
-            return 'December';
+            return 'Decembre';
         }
       } else {
         int month = DateTime.now().month;
         switch (month) {
           case 1:
-            return 'Junuary';
+            return 'Janvier';
           case 2:
-            return 'February';
+            return 'Fevrier';
           case 3:
-            return 'March';
+            return 'Mars';
           case 4:
-            return 'April';
+            return 'Avril';
           case 5:
-            return 'May';
+            return 'Mai';
           case 6:
-            return 'june';
+            return 'Juin';
           case 7:
-            return 'July';
+            return 'Juillet';
           case 8:
-            return 'August';
+            return 'Aout';
           case 9:
-            return 'September';
+            return 'Septembre';
           case 10:
-            return 'October';
+            return 'Octobre';
           case 11:
-            return 'November';
+            return 'Novembre';
           case 12:
-            return 'December';
+            return 'Decembre';
         }
       }
     }
@@ -128,7 +128,6 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProductsBasedOnCategoryProvider>()
@@ -151,11 +150,6 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
               builder: (context, usersProductProvider, child) {
             if (usersProductProvider.productsFetched == false) {
               return SizedBox();
-              // Center(
-              //   child: CircularProgressIndicator(
-              //     color: amber,
-              //   ),
-              // );
             } else {
               if (usersProductProvider.products.isEmpty) {
                 return const Center(
@@ -299,7 +293,7 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
                                     ),
                                     CommonFunction.blankSpace(height * 0.01, 0),
                                     Text(
-                                      'Save extra with No Cost EMI',
+                                      'Économisez avec EMI sans frais',
                                       style: textTheme.labelMedium!.copyWith(
                                         color: grey,
                                       ),
@@ -310,7 +304,7 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: 'Get it by ',
+                                            text: 'Obtenez-le par ',
                                             style:
                                                 textTheme.labelMedium!.copyWith(
                                               color: grey,
@@ -348,8 +342,8 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
                                     ),
                                     Text(
                                       currentProduct.discountedPrice! > 500
-                                          ? 'Free Delivery by Permis 111'
-                                          : 'Extra delivery charges Applied',
+                                          ? 'Livraison gratuite par Permis 111'
+                                          : 'Frais de livraison appliqués',
                                       style: textTheme.labelMedium!.copyWith(
                                         color: grey,
                                       ),
@@ -364,13 +358,7 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
                                           category: currentProduct.category,
                                           description:
                                               currentProduct.description,
-                                          brandName: currentProduct.brandName,
-                                          manufacturerName:
-                                              currentProduct.manufacturerName,
-                                          countryOfOrigin:
-                                              currentProduct.countryOfOrigin,
-                                          specifications:
-                                              currentProduct.specifications,
+                                           brandName: currentProduct.brandName,
                                           price: currentProduct.price,
                                           discountedPrice:
                                               currentProduct.discountedPrice,
@@ -399,7 +387,7 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
                                         ),
                                       ),
                                       child: Text(
-                                        'Add to Cart',
+                                        'Ajouter au panier',
                                         style: textTheme.bodyMedium,
                                       ),
                                     )
