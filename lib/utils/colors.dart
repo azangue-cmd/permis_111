@@ -15,17 +15,18 @@ Color transparent = Colors.transparent;
 Color teal = Colors.teal;
 const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
 Color red = Colors.red;
-Color  kPrimaryColor = Color.fromARGB(255, 13, 71, 161);
+Color  kPrimaryColor = Color.fromARGB(255, 236, 46, 46);
 Color green = Colors.green;
 
 
 //Lienar Gradient Color
 
 List<Color> appBarGradientColor = [
-  const Color(0xff82d9e3),
-  const Color(0xffa7e7cd)
+  Color.fromARGB(255, 206, 65, 55),
+  Color.fromARGB(255, 255, 43, 43),
+  
 ];
 List<Color> addressBarGradientColor = [
-  const Color(0xffb5e7ee),
-  const Color(0xffcbf1e2)
+  Color.fromARGB(255, 250, 134, 134),
+  Color.fromARGB(255, 250, 142, 115)
 ];

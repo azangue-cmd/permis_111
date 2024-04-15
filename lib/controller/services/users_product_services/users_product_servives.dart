@@ -205,23 +205,41 @@ class UsersProductService {
     required UserProductModel productModel,
   }) async {
     try {
-      Uuid uuid = Uuid();
       await firestore
           .collection('Orders')
-          .doc(auth.currentUser!.phoneNumber)
+          .doc(auth.currentUser!.phoneNumber!)
           .collection('myOrders')
-          .doc(productModel.productID! + uuid.v1())
+          .doc(productModel.productID!)
           .set(productModel.toMap())
           .whenComplete(() {
         log('Data Added');
 
-        // CommonFunction.showSuccessToast(
-        //     context: context, message: 'Product Ordered Successful');
       });
     } catch (e) {
       log(e.toString());
-      // CommonFunction.showErrorToast(context: context, message: e.toString());
     }
+  }
+
+
+  static Future<List<ProductModel>> fetchCheckSellerOrders() async {
+    final orders = await firestore.collection('Orders').get();
+    if(orders.docs.isEmpty){print('la colection est vide');
+    }else{print('la colection contient des documents');}
+    List<ProductModel> sellersProducts = [];
+    for (final order in orders.docs) {
+      final orderData = await firestore
+          .collection("Orders")
+          .doc(order.id)
+          .collection("myOrders")
+          .get();
+      for (final product in orderData.docs) {
+        final productData = ProductModel.fromMap(product.data());
+        if (productData.productSellerID == auth.currentUser!.phoneNumber) {
+        sellersProducts.add(productData);
+        }
+      }
+    }
+    return sellersProducts;
   }
 
   static Stream<List<UserProductModel>> fetchOrdersAsStream() => firestore
@@ -234,9 +252,6 @@ class UsersProductService {
           toFirestore: (UserProductModel model, _) => model.toMap())
       .snapshots()
       .map((event) => event.docs.map((e) => e.data()).toList());
-  /*.map((snapshot) => snapshot.docs.map((doc) {
-            return UserProductModel.fromMap(doc.data());
-          }).toList());*/
 
   static Future<List<UserProductModel>> fetchOrders() async {
     try {

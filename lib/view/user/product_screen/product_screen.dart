@@ -11,7 +11,6 @@ import 'package:uuid/uuid.dart';
 
 import '../../../constants/constant_permis.dart';
 import '../../../controller/provier/rating_provider/rating_provider.dart';
-import '../../../controller/services/product_services/product_services.dart';
 import '../../../controller/services/rating_services/rating_services.dart';
 import '../../../controller/services/users_product_services/users_product_servives.dart';
 import '../../../model/product_model.dart';
@@ -363,9 +362,6 @@ class _ProductScreenState extends State<ProductScreen> {
                       category: widget.productModel.category,
                       description: widget.productModel.description,
                       brandName: widget.productModel.brandName,
-                      // manufacturerName: widget.productModel.manufacturerName,
-                      // countryOfOrigin: widget.productModel.countryOfOrigin,
-                      // specifications: widget.productModel.specifications,
                       price: widget.productModel.price,
                       discountedPrice: widget.productModel.discountedPrice,
                       productID: widget.productModel.productID,

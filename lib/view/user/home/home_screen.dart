@@ -130,26 +130,26 @@ class _HomeScreenState extends State<HomeScreen> {
   headphoneDeals(int index) {
     switch (index) {
       case 0:
-        return 'Bose';
+        return 'SCC';
       case 1:
-        return 'BoAt';
+        return 'STC plus';
       case 2:
-        return 'Sony';
+        return 'STC 30';
       case 3:
-        return 'OnePlus';
+        return 'Voir plus';
     }
   }
 
-  clothingDeals(int index) {
+  PorductDeals(int index) {
     switch (index) {
       case 0:
-        return 'Kurtas, sarees & more';
+        return 'SCC';
       case 1:
-        return 'Tops, dress & more';
+        return 'STC plus';
       case 2:
-        return 'T-Shirt, jeans & more';
+        return 'STC 30';
       case 3:
-        return 'View all';
+        return 'Voir plus';
     }
   }
 
@@ -190,12 +190,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 todaysDealsCarouselController: todaysDealsCarouselController,
               ),
               CommonFunction.divider(),
-              OtherOfferGridWidget(
-                  title: 'Latest Launces in Headphones',
-                  textBtnName: 'En savoir plus',
-                  productPicNamesList: headphonesProductDeals,
-                  offerFor: 'headphones'),
-              CommonFunction.divider(),
               Container(
                   height: height * 0.35,
                   width: width,
@@ -222,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         horizontal: width * 0.03, vertical: height * 0.01),
                     child: Text(
                       'plus de documentaire sur 111 TV',
-                      style: textTheme.displaySmall!.copyWith(
+                      style: textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -267,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             title,
-            style: textTheme.displaySmall!.copyWith(
+            style: textTheme.bodySmall!.copyWith(
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -313,10 +307,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Text(
-                      offerFor == 'headProductphones'
+                      offerFor == 'headProduct'
                           ? headphoneDeals(index)
-                          : clothingDeals(index),
-                      style: textTheme.bodyMedium,
+                          : PorductDeals(index),
+                      style: textTheme.bodySmall,
                     ),
                   ],
                 ),

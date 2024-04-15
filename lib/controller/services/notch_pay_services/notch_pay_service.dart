@@ -7,7 +7,9 @@ import '../../../model/transaction_model.dart'; // Importation du package pour e
 
 // Définition de la classe NotchPayService
 class NotchPayService {
-  final String publicKey = 'sb.ioSUaNKW0X89GKNyf47WHk5yidfi6T1iBnXYlfyp73UviCGNlYuVgZqk6A8skh6saa5vIxnuQbENIKETtmlDmFNhQ4lcSEpfs6RW5WkgOqKjQyrHs9ItIoeUkLYAC'; // Déclaration de la clé publique
+  final String publicKey = 
+  //'sk_test.m3lz65Gwxnmo1pLV3iTbw7u5e7fQ7Hl0PkxmxHDNQYGwxJL9HQVgESMazaXDV0xQEdVEPYt4EMLs2xq4d2fVrdmQrpqe1MjpREEEpjlAMzMFbI2Dk4B0MtFsnkyYO';
+  'pk_test.qsHOU05HolrYNWhdpVQ41JwhfRMVPpRZfVY8PObsPLqREtF3bvSjNLmB3MrAfQEYKU1mMjxIJoUWJdFG14RIDhzSvuod239souIaUQtdA1bUcdeR1b007ol7zYSD1'; // Déclaration de la clé publique
 
   // Constructeur de la classe qui prend la clé publique en paramètre
   NotchPayService();
@@ -46,7 +48,8 @@ class NotchPayService {
   }
 
    Future<List<TransactionModel>> getApiTransactions() async {
-    final response = await http.get(Uri.parse('https://api.notchpay.co/payments'), headers: {
+    // final response = await http.get(Uri.parse('https://api.notchpay.co/payments')
+    final response = await http.get(Uri.parse('https://api.notchpay.co/payments/initialize'), headers: {
       'Authorization': publicKey,
       'Accept': 'application/json',
     });

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
 import 'package:permis_111/controller/provier/address_provider.dart';
-import 'package:permis_111/controller/services/auth_services/function.dart';
 import 'package:permis_111/controller/services/notch_pay_services/notch_pay_service.dart';
 import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:permis_111/model/product_model.dart';
 import 'package:permis_111/model/transaction_model.dart';
 import 'package:permis_111/model/user_product_model.dart';
+import 'package:permis_111/pages/widgets/menus/side_menus.dart';
 import 'package:permis_111/utils/colors.dart';
-import 'package:permis_111/view/profile/navbar.dart';
 import 'package:permis_111/view/user/product_screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,85 +28,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Scaffold(
-        drawer: const NavBar(),
-        appBar: PreferredSize(
-          preferredSize: Size(width, height * 0.08),
-          child: Builder(builder: (context) {
-            return Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: width * 0.03, vertical: height * 0.01),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: appBarGradientColor,
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Provider.of<AddressProvider>(context, listen: false);
+            
+      },
+      child: SafeArea(
+        child: Scaffold(
+          drawer: const SideMenu(),
+          appBar: PreferredSize(
+            preferredSize: Size(width, height * 0.08),
+            child: Builder(builder: (context) {
+              return Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.03, vertical: height * 0.01),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: appBarGradientColor,
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
                 ),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                      icon: const Icon(Icons.menu),
+                    ),
+                    Image(
+                      image: const AssetImage(
+                        'assets/images/permis111_5.png',
+                      ),
+                      height: height * 0.02,
+                    ),
+                    const Spacer(),
+                    
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.notifications_none,
+                        color: Colors.black,
+                        size: height * 0.035,
+                      ),
+                    ),
+                    
+                  ],
+                ),
+              );
+            }),
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              width: width,
+              padding: EdgeInsets.symmetric(
+                vertical: height * 0.02,
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  IconButton(
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                    icon: const Icon(Icons.menu),
-                  ),
-                  Image(
-                    image: const AssetImage(
-                      'assets/images/permis111_5.png',
-                    ),
-                    height: height * 0.02,
-                  ),
-                  const Spacer(),
-                  
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.notifications_none,
-                      color: Colors.black,
-                      size: height * 0.035,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                      size: height * 0.035,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async {
-                      await disconnect();
-                    },
-                    icon: const Icon(Icons.logout),
-                  ),
+                  UserGreetingsYouScreen(
+                      width: width, textTheme: textTheme, height: height),
+                  // CommonFunction.blankSpace(height * 0.01, 0),
+                 // YouGridBtons(width: width, textTheme: textTheme),
+                  CommonFunction.blankSpace(height * 0.02, 0),
+                  UsersOrders(width: width, height: height, textTheme: textTheme),
+                  CommonFunction.blankSpace(height * 0.01, 0),
+                  CommonFunction.divider(),
+                  KeepShopping(
+                      width: width, height: height, textTheme: textTheme),
+                  CommonFunction.blankSpace(height * 0.01, 0),
+                  CommonFunction.divider(),
+                  BuyAgain(width: width, height: height, textTheme: textTheme)
                 ],
               ),
-            );
-          }),
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            width: width,
-            padding: EdgeInsets.symmetric(
-              vertical: height * 0.02,
-            ),
-            child: Column(
-              children: [
-                UserGreetingsYouScreen(
-                    width: width, textTheme: textTheme, height: height),
-                // CommonFunction.blankSpace(height * 0.01, 0),
-               // YouGridBtons(width: width, textTheme: textTheme),
-                CommonFunction.blankSpace(height * 0.02, 0),
-                UsersOrders(width: width, height: height, textTheme: textTheme),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                CommonFunction.divider(),
-                KeepShopping(
-                    width: width, height: height, textTheme: textTheme),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                CommonFunction.divider(),
-                BuyAgain(width: width, height: height, textTheme: textTheme)
-              ],
             ),
           ),
         ),
@@ -383,7 +375,7 @@ class UsersOrders extends StatelessWidget {
                 width: width,
                 alignment: Alignment.center,
                 child: Text(
-                  'Opps!! Vous n’avez encore rien commandé!!',
+                  'Opps!! Vous n’avez encore rien acheter!!',
                   style: textTheme.displaySmall,
                 ),
               );
@@ -669,7 +661,7 @@ class UserGreetingsYouScreen extends StatelessWidget {
               ),
               const Spacer(),
               CircleAvatar(
-                backgroundColor: greyShade3,
+                backgroundImage: const AssetImage('assets/images/permis111_2.png'),
                 radius: height * 0.025,
               ),
             ],

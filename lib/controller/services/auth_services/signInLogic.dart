@@ -81,9 +81,12 @@ class _SignInLogicState extends State<SignInLogic> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Image(
-        image: AssetImage('assets/images/permis111_2.png'),
-        fit: BoxFit.fill,
+      body: Center(
+        child: Image(
+          width: 120,
+          image: AssetImage('assets/images/permis111_2.png'),
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

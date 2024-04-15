@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LotieScreen extends StatefulWidget {
   const LotieScreen({super.key});
@@ -25,7 +26,18 @@ class _LotieScreenState extends State<LotieScreen> {
               width: screenSize.width,
             ),
           ),
-          
+          Positioned(
+            top: 40,
+            right: 5,
+            left: 5,
+            child: Lottie.asset(
+              tabs[currentIndex].lotieTitle,
+              width: 600,
+              alignment: Alignment.topCenter
+              // width: 300,
+              // fit: BoxFit.cover,
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
@@ -89,14 +101,22 @@ class _LotieScreenState extends State<LotieScreen> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
+      floatingActionButton: FloatingActionButton( 
+        onPressed: () {
+          if (currentIndex == 2){
+            pageController.animateToPage(0, duration: const Duration(milliseconds: 600), curve: Curves.linear);
+          }else{
+            pageController.nextPage(duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+          }
+        },
+        child:  const Icon(
           CupertinoIcons.chevron_right,
           color: Colors.white,
           ),
+          
         backgroundColor: Colors.transparent,
       )
+      
     );
   }
 }
@@ -126,17 +146,6 @@ class ArcPainter extends CustomPainter {
     ..close();
 
     canvas.drawPath(whiteArc, Paint()..color = Colors.white);
-    // final paint = Paint()
-    // ..color = Colors.white
-    // ..style = PaintingStyle.fill;
-
-    // final path = Path();
-    // path.moveTo(0, size.height * 0.5);
-    // path.quadraticBezierTo(size.width * 0.5, size.height * 0.75, size.width, size.height * 0.5);
-    // path.lineTo(size.width, size.height);
-    // path.lineTo(0, size.height);
-    // path.close();
-    // canvas.drawPath(path, paint);
   }
 
   @override
@@ -176,7 +185,16 @@ class OnboardingModel {
 }
 
 List<OnboardingModel> tabs = [ OnboardingModel(
-  'assets/images/loties/Animation - 1711376969129.json',
+  'assets/images/loties/Animation - 1711465341634.json',
   'connectez vous pour vous sooigner',
-  'OTP connexion rapide et securisee')
+  'OTP connexion rapide et securisee'),
+  OnboardingModel(
+    'assets/images/loties/Animation - 1711468249579.json',
+    'Trouvez Le bon medicament',
+    'Pour une sante de fer'),
+    OnboardingModel(
+    'assets/images/loties/Animation - 1711469042919.json',
+    'Payer votre facture',
+    'La sante n\'a pas de prix'),
+  
 ];

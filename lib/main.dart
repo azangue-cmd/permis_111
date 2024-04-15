@@ -11,6 +11,7 @@ import 'package:permis_111/controller/provier/user_product_provider/users_produc
 import 'package:permis_111/controller/services/auth_services/signInLogic.dart';
 import 'package:permis_111/firebase_options.dart';
 import 'package:permis_111/pages/splash_screen/splashscreen.dart';
+import 'package:permis_111/pages/widgets/menus/side_menus.dart';
 import 'package:permis_111/utils/theme.dart';
 import 'package:permis_111/view/chatbot.dart';
 import 'package:permis_111/view/loties_Screen/loties_Screen.dart';
@@ -57,19 +58,19 @@ class MyApp extends StatelessWidget {
           // mobileNumber: '+237610101010', verificationId: '',
         //  ),
        
-          // home: StreamBuilder<User?>(
-          //   stream: auth.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     return snapshot.data == null ? const AuthScreen() : const SignInLogic();
-          //   },
-          // ),
+          home: StreamBuilder<User?>(
+            stream: auth.authStateChanges(),
+            builder: (context, snapshot) {
+              return snapshot.data == null ? const SplashScreen() : const SignInLogic();
+            },
+          ),
           
-            //home: const Chatbot()
-          //home: const PaymentScreen(),
-           //home: const AddProductScreen()
+            
+        //home: const LotieScreen(),
+          // home: const SideMenu(),
           //home: const UserBottomNavBar(),
           //home: const SellerBottomNavBar(),
-         home: const LotieScreen()
+         //home: const LotieScreen()
          // home: const SignInLogic()
           ),
     );

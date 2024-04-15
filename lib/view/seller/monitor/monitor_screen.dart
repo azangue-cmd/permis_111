@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
+import 'package:permis_111/controller/services/users_product_services/users_product_servives.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/provier/product_provider/product_provider.dart';
@@ -124,9 +125,11 @@ class _MonitorScreenState extends State<MonitorScreen> {
                         ProductModel currentModel =
                             sellerProductProvider.products[index];
 
-                        return StreamBuilder(
-                            stream: ProductServices.fetchSalesPerProduct(
-                                productID: currentModel.productID!),
+                        // return StreamBuilder(
+                        //     stream: ProductServices.fetchSalesPerProduct(
+                        //         productID: currentModel.productID!),
+                        FutureBuilder(
+                            future: UsersProductService.fetchCheckSellerOrders(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 if (snapshot.data!.isEmpty) {
@@ -213,61 +216,61 @@ class _MonitorScreenState extends State<MonitorScreen> {
                                                           style: textTheme
                                                               .bodySmall!,
                                                         ),
-                                                        TextSpan(
-                                                          text: ' ${snapshot.data!.fold(
-                                                                0.0,
-                                                                (previousValue,
-                                                                        product) =>
-                                                                    previousValue +
-                                                                    (product.productCount! *
-                                                                        product
-                                                                            .discountedPrice!),
-                                                              ).toStringAsFixed(0)} frcs',
+                                                  //       TextSpan(
+                                                  //         text: ' ${snapshot.data!.fold(
+                                                  //               0.0,
+                                                  //               (previousValue,
+                                                  //                       product) =>
+                                                  //                   previousValue +
+                                                  //                   (product.productCount! *
+                                                  //                       product
+                                                  //                           .discountedPrice!),
+                                                  //             ).toStringAsFixed(0)} frcs',
 
-                                                          // textAlign: TextAlign.justify,
-                                                          // maxLines: 2,
-                                                          style: textTheme
-                                                              .bodySmall!
-                                                              .copyWith(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  RichText(
-                                                    text: TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text: 'Qty: ',
-                                                          style: textTheme
-                                                              .bodySmall!,
-                                                        ),
-                                                        TextSpan(
-                                                          text: snapshot.data!
-                                                              .fold(
-                                                                0.0,
-                                                                (previousValue,
-                                                                        product) =>
-                                                                    previousValue +
-                                                                    (product
-                                                                        .productCount!),
-                                                              )
-                                                              .toStringAsFixed(
-                                                                  0),
+                                                  //         // textAlign: TextAlign.justify,
+                                                  //         // maxLines: 2,
+                                                  //         style: textTheme
+                                                  //             .bodySmall!
+                                                  //             .copyWith(
+                                                  //           overflow:
+                                                  //               TextOverflow
+                                                  //                   .ellipsis,
+                                                  //         ),
+                                                  //       ),
+                                                  //     ],
+                                                  //   ),
+                                                  // ),
+                                                  // RichText(
+                                                  //   text: TextSpan(
+                                                  //     children: [
+                                                  //       TextSpan(
+                                                  //         text: 'Qty: ',
+                                                  //         style: textTheme
+                                                  //             .bodySmall!,
+                                                  //       ),
+                                                  //       TextSpan(
+                                                  //         text: snapshot.data!
+                                                  //             .fold(
+                                                  //               0.0,
+                                                  //               (previousValue,
+                                                  //                       product) =>
+                                                  //                   previousValue +
+                                                  //                   (product
+                                                  //                       .productCount!),
+                                                  //             )
+                                                  //             .toStringAsFixed(
+                                                  //                 0),
 
-                                                          // textAlign: TextAlign.justify,
-                                                          // maxLines: 2,
-                                                          style: textTheme
-                                                              .bodySmall!
-                                                              .copyWith(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
+                                                  //         // textAlign: TextAlign.justify,
+                                                  //         // maxLines: 2,
+                                                  //         style: textTheme
+                                                  //             .bodySmall!
+                                                  //             .copyWith(
+                                                  //           overflow:
+                                                  //               TextOverflow
+                                                  //                   .ellipsis,
+                                                  //         ),
+                                                  //       ),
                                                       ],
                                                     ),
                                                   ),

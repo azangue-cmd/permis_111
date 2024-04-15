@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../constants/common_function.dart';
 //import '../../../constants/constants.dart';
+import '../../../controller/services/users_product_services/users_product_servives.dart';
 import '../../../utils/colors.dart';
 
 class TodaysDealsHomeScreenWidget extends StatelessWidget {
@@ -42,6 +43,7 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
               '50%-80% de réduction | Dernières offres.',
               style: textTheme.displaySmall!.copyWith(
                 fontWeight: FontWeight.w600,
+                fontSize: 15
               ),
             ),
             CommonFunction.blankSpace(height * 0.01, 0),
@@ -54,8 +56,9 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                     width: width,
                     alignment: Alignment.center,
                     child: Text(
-                      'Loading Lastest Deals',
-                      style: textTheme.bodyMedium,
+                      'Chargement des dernières offres',
+                      style: textTheme.bodySmall,
+                      
                     ));
               } else {
                 return Column(
@@ -73,7 +76,11 @@ class TodaysDealsHomeScreenWidget extends StatelessWidget {
                           return Builder(
                             builder: (BuildContext context) {
                               return InkWell(
-                                onTap: () {
+                                onTap: () async {
+                                  await UsersProductService.addRecentlySeenProduct(
+                                    context: context,
+                                    productModel: currentProduct,
+                                  );
                                   Navigator.push(
                                     context,
                                     PageTransition(

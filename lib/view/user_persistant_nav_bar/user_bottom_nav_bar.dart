@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../utils/colors.dart';
 import '../profile/profile_sreen.dart';
 import '../user/cart/cart_screen.dart';
@@ -22,7 +23,31 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
       const HomeScreen(),
       const ProfileScreen(),
       const CartScreen(),
-      const MenuScreen()
+      GestureDetector(
+        onTap: _launchURL,
+        child: Center(
+          child:  Container(
+            height: 50,
+            width: 100,
+            decoration: BoxDecoration(
+              color: amber,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Center(
+              child: Text(
+                'SuperLife',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        )
+      ),
+     
+      //const MenuScreen(),
     ];
   }
 
@@ -30,28 +55,34 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.home),
-        title: "Home",
+        title: "Acceille",
         activeColorPrimary: kPrimaryColor,
         inactiveColorPrimary: black,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.person),
-        title: "You",
+        title: "Profile",
         activeColorPrimary: kPrimaryColor,
         inactiveColorPrimary: black,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.cart),
-        title: "Cart",
+        title: "Pagnier",
         activeColorPrimary: kPrimaryColor,
         inactiveColorPrimary: black,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.menu),
-        title: "Menu",
+        icon: const Icon(Icons.bar_chart_outlined),
+        title: "SuperLife",
         activeColorPrimary: kPrimaryColor,
         inactiveColorPrimary: black,
       ),
+      // PersistentBottomNavBarItem(
+      //   icon: const Icon(Icons.menu),
+      //   title: "Menu",
+      //   activeColorPrimary: kPrimaryColor,
+      //   inactiveColorPrimary: black,
+      // ),
     ];
   }
 
@@ -85,5 +116,13 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
       ),
       navBarStyle: NavBarStyle.style3,
     );
+  }
+}
+void _launchURL() async {
+  const url = 'https://office.superlifeworld.com.my/index.php/site/home';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Oops!! imposible de se connecter a $url';
   }
 }

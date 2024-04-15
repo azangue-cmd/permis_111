@@ -8,7 +8,6 @@ import 'package:permis_111/utils/colors.dart';
 import 'package:permis_111/view/seller/add_product_screen/widget/add_product_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controller/services/auth_services/function.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
@@ -104,7 +103,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             } else if (sellerProductProvider.products.isEmpty) {
               return Center(
                 child: Text(
-                  'No Products Found!',
+                  'Aucun produit trouvé!',
                   style: textTheme.bodyMedium,
                 ),
               );
@@ -117,10 +116,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 ProductModel currentModel =
                     sellerProductProvider.products[index];
                 return Container(
-                  height: height * 0.35,
+                  height: height * 0.315,
                   width: width,
-                  padding: EdgeInsets.all(16),
-                  margin: EdgeInsets.only(
+                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.only(
                     left: 16,
                     right: 16,
                     bottom: 8,
@@ -157,7 +156,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                           );
                         }).toList(),
                       ),
-                      const Spacer(),
+                      CommonFunction.blankSpace(height * 0.01, 0),
+                      //const Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

@@ -33,13 +33,9 @@ class HomeScreenUserAdressBar extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(
-                Icons.location_pin,
-                color: black,
-              ),
               CommonFunction.blankSpace(0, width * 0.02),
               Text(
-                'Deliver to ${selectedAddress.name} - ${selectedAddress.town}, ${selectedAddress.state}',
+                'Bienvenue ${selectedAddress.name}',
                 style: textTheme.bodySmall,
               )
             ],
@@ -48,15 +44,12 @@ class HomeScreenUserAdressBar extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(
-                Icons.location_pin,
-                color: black,
-              ),
               CommonFunction.blankSpace(0, width * 0.02),
               Text(
-                'Deliver to user - City - State',
+                'Bienvenue utilisateur',
                 style: textTheme.bodySmall,
-              )
+              ),
+             
             ],
           );
         }

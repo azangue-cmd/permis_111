@@ -37,7 +37,7 @@ class SearchWidget extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: white,
               filled: true,
-              hintText: 'Search Permis111.in',
+              hintText: ' Rechercher',
               prefixIcon: IconButton(
                 onPressed: () {},
                 icon: Icon(
@@ -46,7 +46,7 @@ class SearchWidget extends StatelessWidget {
                 ),
               ),
               suffixIcon: IconButton(
-                onPressed: () {},
+                onPressed: () {ProductServices.getImages(context: context);},
                 icon: Icon(
                   Icons.camera_alt_sharp,
                   color: grey,
@@ -78,7 +78,6 @@ class SearchWidget extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            ProductServices.getImages(context: context);
           },
           icon: Icon(
             Icons.mic,

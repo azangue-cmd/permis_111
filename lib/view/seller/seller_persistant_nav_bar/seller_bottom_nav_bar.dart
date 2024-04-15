@@ -22,13 +22,13 @@ class _SellerBottomNavBarState extends State<SellerBottomNavBar> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.inventory_2_outlined),
-        title: "Inventory",
+        title: "Inventaire",
         activeColorPrimary: teal,
         inactiveColorPrimary: black,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.bar_chart_outlined),
-        title: "Monitor",
+        title: "Moniteur",
         activeColorPrimary: teal,
         inactiveColorPrimary: black,
       ),

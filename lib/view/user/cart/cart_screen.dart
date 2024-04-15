@@ -65,7 +65,7 @@ class _CartScreenState extends State<CartScreen> {
                               children: [
                                 TextSpan(
                                     text: 'Subtotal ',
-                                    style: textTheme.bodyLarge),
+                                    style: textTheme.bodySmall),
                                 TextSpan(
                                   text:
                                       '$cartTotalProduct frcs',
@@ -325,7 +325,14 @@ class _CartScreenState extends State<CartScreen> {
                                                                 FontWeight
                                                                     .bold),
                                                   ),
-                                                  Text(
+                                                  
+                                                ],
+                                              ),
+                                              CommonFunction.blankSpace(
+                                                  height * 0.01, 0),
+                                                  Row(
+                                                    children: [
+                                                      Text(
                                                     '\tMRP: ',
                                                     style: textTheme.bodySmall!
                                                         .copyWith(
@@ -341,8 +348,8 @@ class _CartScreenState extends State<CartScreen> {
                                                                 TextDecoration
                                                                     .lineThrough),
                                                   ),
-                                                ],
-                                              ),
+                                                    ],
+                                                  ),
                                               CommonFunction.blankSpace(
                                                   height * 0.01, 0),
                                               Text(
@@ -361,6 +368,8 @@ class _CartScreenState extends State<CartScreen> {
                                                 style: textTheme.bodySmall!
                                                     .copyWith(color: teal),
                                               ),
+                                              CommonFunction.blankSpace(
+                                                  height * 0.01, 0),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment

@@ -2,14 +2,11 @@
 
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permis_111/constants/common_function.dart';
-import 'package:permis_111/constants/constants.dart';
 import 'package:permis_111/controller/provier/product_by_category_provider/product_by_category_provider.dart';
-import 'package:permis_111/controller/provier/user_product_provider/users_product_provider.dart';
 import 'package:permis_111/model/product_model.dart';
 import 'package:permis_111/pages/widgets/product_display_widget_screen/search_product_appbar.dart';
 import 'package:permis_111/utils/colors.dart';
