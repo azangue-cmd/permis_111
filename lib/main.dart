@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           ),
           
             
-        //home: const LotieScreen(),
+        //home: const UserDataInputScreen(),
           // home: const SideMenu(),
           //home: const UserBottomNavBar(),
           //home: const SellerBottomNavBar(),

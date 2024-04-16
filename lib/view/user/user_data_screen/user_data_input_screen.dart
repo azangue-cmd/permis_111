@@ -17,7 +17,7 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController parentCodeController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -31,6 +31,7 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
+    
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -69,127 +70,64 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Enter your name',
-                  style: textTheme.bodyMedium,
-                ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                TextField(
+                TextFormField(
                   controller: nameController,
+                  cursorWidth: width * 0.005,
                   decoration: InputDecoration(
-                    hintText: 'Enter your name',
-                    hintStyle: textTheme.bodyMedium!.copyWith(
-                      color: grey,
-                    ),
+                    labelText: "Votre nom",
+                    hintText: "Nom",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
+                      borderRadius: BorderRadius.circular(25)
+                    )
+                  ),
+                ),
+        
+                CommonFunction.blankSpace(height * 0.02, 0),
+
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: parentCodeController,
+                        cursorWidth: width * 0.005,
+                        decoration: InputDecoration(
+                          labelText: "* Code parainage",
+                          hintText: "Code",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25)
+                          )
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Veuillez entrer un code';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: secondaryColor,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
+                    ],
                   ),
                 ),
                 CommonFunction.blankSpace(height * 0.02, 0),
-                Text(
-                  'Enter your parent code',
-                  style: textTheme.bodyMedium,
-                ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                TextField(
-                  controller: parentCodeController,
-                  decoration: InputDecoration(
-                    hintText: 'Enter your parent code',
-                    hintStyle: textTheme.bodyMedium!.copyWith(
-                      color: grey,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: secondaryColor,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
-                  ),
-                ),
-                CommonFunction.blankSpace(height * 0.02, 0),
-                Text(
-                  'Phone Number',
-                  style: textTheme.bodyMedium,
-                ),
-                CommonFunction.blankSpace(height * 0.01, 0),
-                TextField(
+
+                TextFormField(
                   controller: phoneController,
-                  readOnly: true,
+                  cursorWidth: width * 0.005,
                   decoration: InputDecoration(
-                    hintText: 'Enter your phone number',
-                    hintStyle: textTheme.bodyMedium!.copyWith(
-                      color: grey,
-                    ),
+                    labelText: "Numero telephone",
+                    hintText: "Numero",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: secondaryColor,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: grey,
-                      ),
-                    ),
+                      borderRadius: BorderRadius.circular(25)
+                    )
                   ),
+                  enabled: false,
                 ),
-                const Spacer(),
+                //const Spacer(),
+                CommonFunction.blankSpace(height * 0.08, 0),
                 ElevatedButton(
                   onPressed: () async {
-                    UserModel userModel = UserModel(
+                    if (formKey.currentState!.validate()) {
+                       UserModel userModel = UserModel(
                         mobileNum: phoneController.text.trim(),
                         name: nameController.text.trim(),
                         parentCode: parentCodeController.text.trim(),
@@ -198,6 +136,16 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
                       userModel: userModel,
                       context: context,
                     );
+                    }
+                    // UserModel userModel = UserModel(
+                    //     mobileNum: phoneController.text.trim(),
+                    //     name: nameController.text.trim(),
+                    //     parentCode: parentCodeController.text.trim(),
+                    //     userType: 'user');
+                    // await UserDataCRUD.addNewUser(
+                    //   userModel: userModel,
+                    //   context: context,
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: amber,
@@ -207,7 +155,7 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
                     ),
                   ),
                   child: Text(
-                    'Proceed',
+                    'Continuer',
                     style: textTheme.bodyMedium,
                   ),
                 )
